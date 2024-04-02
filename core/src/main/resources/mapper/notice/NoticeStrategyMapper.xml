@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.notice.NoticeStrategyMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.notice.NoticeStrategy">
+                    <id column="strategyId" property="strategyId" />
+                    <result column="name" property="name" />
+                    <result column="agentIds" property="agentIds" />
+                    <result column="groupIds" property="groupIds" />
+                    <result column="mark" property="mark" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            strategyId, name, agentIds, groupIds, mark
+        </sql>
+
+</mapper>

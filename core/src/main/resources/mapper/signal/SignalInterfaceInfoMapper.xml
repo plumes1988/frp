@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalInterfaceInfoMapper">
+
+    <resultMap type="com.figure.core.model.signal.SignalInterfaceInfo" id="SignalInterfaceInfoResult">
+        <result property="interfaceId" column="interfaceId"/>
+        <result property="frontId" column="frontId"/>
+        <result property="deviceId" column="deviceId"/>
+        <result property="signalCode" column="signalCode"/>
+        <result property="interfaceIp" column="interfaceIp"/>
+        <result property="interfaceNumber" column="interfaceNumber"/>
+        <result property="serialNumber" column="serialNumber"/>
+        <result property="maxStreamCount" column="maxStreamCount"/>
+        <result property="workMode" column="workMode"/>
+        <result property="logicPositionId" column="logicPositionId"/>
+        <result property="sourceId" column="sourceId"/>
+        <result property="syncStatus" column="syncStatus"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <sql id="selectSignalInterfaceInfoVO">
+        select interfaceId,
+               frontId,
+               deviceId,
+               signalCode,
+               interfaceIp,
+               interfaceNumber,
+               serialNumber,
+               maxStreamCount,
+               workMode,
+               logicPositionId,
+               sourceId,
+               syncStatus,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime
+        from signal_interface_info
+    </sql>
+
+</mapper>

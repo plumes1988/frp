@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalAlarmthresholdStreamRelMapper">
+
+    <resultMap id="SignalAlarmthresholdStreamRelResult" type="com.figure.core.model.signal.SignalAlarmthresholdStreamRel">
+        <result property="objectType" column="objectType"/>
+        <result property="objectId" column="objectId"/>
+        <result property="ruleId" column="ruleId"/>
+        <result property="priority" column="priority"/>
+    </resultMap>
+
+    <sql id="selectSignalAlarmthresholdStreamRelVO">
+        select objectType, objectId, ruleId, priority
+        from signal_alarmthreshold_stream_rel
+    </sql>
+
+    <select id="listByQuery" parameterType="com.figure.core.query.signal.SignalAlarmthresholdStreamRelQuery"
+            resultType="com.figure.core.model.signal.SignalAlarmthresholdStreamRel">
+        select objectType, objectId, ruleId, priority
+        from signal_alarmthreshold_stream_rel
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

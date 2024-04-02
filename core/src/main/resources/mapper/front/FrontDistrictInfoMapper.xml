@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.front.FrontDistrictInfoMapper">
+    
+    <resultMap type="com.figure.core.model.front.FrontDistrictInfo" id="FrontDistrictInfoResult">
+        <result property="districtId" column="districtId"/>
+        <result property="regionCode" column="regionCode"/>
+        <result property="districtName" column="districtName"/>
+        <result property="provinceId" column="provinceId"/>
+        <result property="cityId" column="cityId"/>
+    </resultMap>
+
+    <sql id="selectFrontDistrictInfoVO">
+        select districtId, regionCode, districtName, provinceId, cityId from front_district_info
+    </sql>
+
+</mapper>

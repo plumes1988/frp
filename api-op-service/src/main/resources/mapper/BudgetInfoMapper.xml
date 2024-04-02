@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.system.mapper.BudgetInfoMapper">
+
+        <resultMap id="BudgetInfoPageVoResult" type="com.figure.op.system.domain.vo.BudgetInfoPageVo">
+        </resultMap>
+
+        <select id="selectVoPage" resultMap="BudgetInfoPageVoResult">
+                select *
+                from know_info t
+                <where>
+                        <if test="queryBo.knowKeywords != null"> and t.knowKeywords like concat('%', #{queryBo.knowKeywords}, '%')  </if>
+                        <if test="queryBo.topic != null"> and t.topic  = #{queryBo.topic} </if>
+                        <if test="queryBo.deviceId != null"> and t.deviceId  = #{queryBo.deviceId} </if>
+                        and d.isDelete = 0
+                </where>
+                order by t.knowId desc
+        </select>
+
+        <select id="calPrice" resultType="com.figure.op.system.domain.vo.PriceVo">
+                SELECT SUM(b.price) as amount,  DATE_FORMAT(b.reviewTime, #{bo.timeStr}) as `time`
+                from budget_info b
+                <where>
+                        <if test="bo.start != null and bo.end != null"> and b.reviewTime BETWEEN #{bo.start} AND #{bo.end} </if>
+                        and b.isPlan = '0'
+                        and b.status = '2'
+                        and b.isDelete = 0
+                </where>
+                GROUP BY DATE_FORMAT(b.reviewTime, #{bo.timeStr})
+        </select>
+
+        <select id="getTotalByPlanWithoutOrgan" resultType="BigDecimal">
+                select sum(price) from budget_info
+                <where>
+                        and isDelete = 0
+                        and isPlan = #{isPlan}
+                        and status = '2'
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+        </select>
+
+        <select id="getTotalByPlan" resultType="BigDecimal">
+                select sum(price) from budget_info
+                <where>
+                        and isDelete = 0
+                        and isPlan = #{isPlan}
+                        and organ = #{organ}
+                        and status = '2'
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+        </select>
+
+        <select id="getTotalGroupBySourceWithoutOrgan" resultType="com.figure.op.system.domain.vo.PercentVo">
+                select sum(price) as amount, source
+                from budget_info
+                <where>
+                        and isDelete = 0
+                        and isPlan = #{isPlan}
+                        and status = '2'
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+                group by source
+        </select>
+
+        <select id="getTotalGroupBySource" resultType="com.figure.op.system.domain.vo.PercentVo">
+                select sum(price) as amount, source
+                from budget_info
+                <where>
+                        and isDelete = 0
+                        and isPlan = #{isPlan}
+                        and organ = #{organ}
+                        and status = '2'
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+                group by source
+        </select>
+
+</mapper>

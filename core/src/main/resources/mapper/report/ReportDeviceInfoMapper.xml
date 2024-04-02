@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.report.ReportDeviceInfoMapper">
+
+    <resultMap id="ReportDeviceInfoResult" type="com.figure.core.model.report.ReportDeviceInfo">
+        <result property="id" column="id"/>
+        <result property="deviceCode" column="deviceCode"/>
+        <result property="systemID" column="systemID"/>
+        <result property="typeKeywords" column="typeKeywords"/>
+        <result property="featureType" column="featureType"/>
+        <result property="deviceIdx" column="deviceIdx"/>
+        <result property="reportServiceCode" column="reportServiceCode"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectReportDeviceInfoVO">
+        select id,
+               deviceCode,
+               systemID,
+               typeKeywords,
+               featureType,
+               deviceIdx,
+               reportServiceCode,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from report_device_info
+    </sql>
+
+    <select id="listRel" resultType="java.util.HashMap">
+        select t.id,
+        t.deviceCode,
+        t.systemID,
+        t.typeKeywords,
+        t.featureType,
+        t.deviceIdx,
+        t.reportServiceCode,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        di1.deviceId,
+        di1.deviceName,
+        di1.deviceCode,
+        fsi.frontName,
+        flp.positionName,
+        dt1.typeName as deviceTypeName,
+        dt2.typeName as deviceSubTypeName,
+        di1.controlIP,
+        di1.dataIPs,
+        di2.deviceName as serviceName
+        from report_device_info t
+        left join report_service_info rsi on rsi.serviceCode = t.reportServiceCode
+        left join device_info di1 on di1.deviceCode = t.deviceCode
+        left join device_info di2 on di2.deviceCode = t.reportServiceCode
+        left join front_station_info fsi on fsi.frontId = di1.monitorStationId
+        left join front_logic_position flp on flp.positionId = di1.logicPositionId
+        left join device_type dt1 on dt1.typeCode = di1.deviceType
+        left join device_type dt2 on dt2.typeCode = di1.deviceSubType
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

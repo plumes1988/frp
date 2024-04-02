@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceAlarmtypeMapTemplateMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceAlarmtypeMapTemplate">
+                    <id column="templateId" property="templateId" />
+                    <result column="templateName" property="templateName" />
+                    <result column="deviceType" property="deviceType" />
+                    <result column="deviceSubType" property="deviceSubType" />
+                    <result column="reportAlarmName" property="reportAlarmName" />
+                    <result column="alarmId" property="alarmId" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            templateId, templateName, deviceType, deviceSubType, reportAlarmName, alarmId
+        </sql>
+
+</mapper>

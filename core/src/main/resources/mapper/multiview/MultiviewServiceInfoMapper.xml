@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.multiview.MultiviewServiceInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.multiview.MultiviewServiceInfo">
+                    <id column="multiviewServiceId" property="multiviewServiceId" />
+                    <result column="multiviewServiceName" property="multiviewServiceName" />
+                    <result column="screenType" property="screenType" />
+                    <result column="frontId" property="frontId" />
+                    <result column="deviceId" property="deviceId" />
+                    <result column="multiviewServiceIP" property="multiviewServiceIP" />
+                    <result column="multiviewTunnelNum" property="multiviewTunnelNum" />
+                    <result column="useGPU" property="useGPU" />
+                    <result column="multiviewServiceType" property="multiviewServiceType" />
+                    <result column="audioPosition" property="audioPosition" />
+                    <result column="isAlarmFromMonitor" property="isAlarmFromMonitor" />
+                    <result column="schedulable" property="schedulable" />
+                    <result column="config" property="config" />
+                    <result column="syncStatus" property="syncStatus" />
+                    <result column="runStatus" property="runStatus" />
+                    <result column="createUserId" property="createUserId" />
+                    <result column="createTime" property="createTime" />
+                    <result column="updateUserId" property="updateUserId" />
+                    <result column="updateTime" property="updateTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            multiviewServiceId, multiviewServiceName, screenType, frontId, deviceId, multiviewServiceIP, multiviewTunnelNum, useGPU, multiviewServiceType, audioPosition, isAlarmFromMonitor, schedulable, config, syncStatus, runStatus, createUserId, createTime, updateUserId, updateTime
+        </sql>
+
+</mapper>

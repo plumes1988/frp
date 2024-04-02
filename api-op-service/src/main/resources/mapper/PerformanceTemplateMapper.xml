@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.performance.mapper.PerformanceTemplateMapper">
+    
+    <resultMap type="PerformanceTemplateDo" id="PerformanceTemplateResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="info"    column="info"    />
+        <result property="score"    column="score"    />
+        <result property="createuserid"    column="createUserId"    />
+        <result property="createtime"    column="createTime"    />
+        <result property="updateuserid"    column="updateUserId"    />
+        <result property="updatetime"    column="updateTime"    />
+        <result property="isdelete"    column="isDelete"    />
+    </resultMap>
+
+    <sql id="selectPerformanceTemplateVo">
+        select id, name, info, score, createUserId, createTime, updateUserId, updateTime, isDelete from performance_template
+    </sql>
+
+    <select id="selectPerformanceTemplateList" parameterType="PerformanceTemplateDo" resultMap="PerformanceTemplateResult">
+        <include refid="selectPerformanceTemplateVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="info != null  and info != ''"> and info = #{info}</if>
+            <if test="score != null "> and score = #{score}</if>
+            <if test="createuserid != null "> and createUserId = #{createuserid}</if>
+            <if test="createtime != null "> and createTime = #{createtime}</if>
+            <if test="updateuserid != null "> and updateUserId = #{updateuserid}</if>
+            <if test="updatetime != null "> and updateTime = #{updatetime}</if>
+            <if test="isdelete != null "> and isDelete = #{isdelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectPerformanceTemplateById" parameterType="Long" resultMap="PerformanceTemplateResult">
+        <include refid="selectPerformanceTemplateVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPerformanceTemplate" parameterType="PerformanceTemplateDo" useGeneratedKeys="true" keyProperty="id">
+        insert into performance_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="info != null">info,</if>
+            <if test="score != null">score,</if>
+            <if test="createuserid != null">createUserId,</if>
+            <if test="createtime != null">createTime,</if>
+            <if test="updateuserid != null">updateUserId,</if>
+            <if test="updatetime != null">updateTime,</if>
+            <if test="isdelete != null">isDelete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="info != null">#{info},</if>
+            <if test="score != null">#{score},</if>
+            <if test="createuserid != null">#{createuserid},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="updateuserid != null">#{updateuserid},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="isdelete != null">#{isdelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePerformanceTemplate" parameterType="PerformanceTemplateDo">
+        update performance_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="info != null">info = #{info},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="createuserid != null">createUserId = #{createuserid},</if>
+            <if test="createtime != null">createTime = #{createtime},</if>
+            <if test="updateuserid != null">updateUserId = #{updateuserid},</if>
+            <if test="updatetime != null">updateTime = #{updatetime},</if>
+            <if test="isdelete != null">isDelete = #{isdelete},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePerformanceTemplateById" parameterType="Long">
+        delete from performance_template where id = #{id}
+    </delete>
+
+    <delete id="deletePerformanceTemplateByIds" parameterType="String">
+        delete from performance_template where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

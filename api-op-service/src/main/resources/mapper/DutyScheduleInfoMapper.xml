@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.DutyScheduleInfoMapper">
+
+    <resultMap id="DutyScheduleInfoPageVoResult" type="com.figure.op.duty.domain.vo.DutyScheduleInfoPageVo">
+    </resultMap>
+
+    <resultMap id="DutyScheduleInfoListVoResult" type="com.figure.op.duty.domain.vo.DutyScheduleInfoListVo">
+    </resultMap>
+
+    <resultMap id="DutyScheduleStatisticsPageVoResult" type="com.figure.op.duty.domain.vo.DutyScheduleStatisticsPageVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="DutyScheduleInfoPageVoResult">
+        SELECT
+        s.*, u.userName as createUsername, f.frontName,
+        GROUP_CONCAT(DISTINCT d.dutyName) AS dutyNames
+        FROM
+        duty_schedule_info s
+        LEFT JOIN
+        duty_schedule_info_duty sd ON s.scheduleId = sd.scheduleId
+        LEFT JOIN
+        duty_info d ON sd.dutyId = d.dutyId
+        LEFT JOIN
+        sys_user_info u ON s.createUserId = u.userId
+        LEFT JOIN
+        front_station_info f ON s.stationId = f.frontId
+        <where>
+            <if test="queryBo.stationId != null"> and s.stationId = #{queryBo.stationId} </if>
+            <if test="queryBo.scheduleName != null and queryBo.scheduleName != ''"> and s.scheduleName like CONCAT('%', #{queryBo.scheduleName}, '%')</if>
+            and s.isDelete = 0
+        </where>
+        GROUP BY
+        s.scheduleId
+        order by s.scheduleId desc
+    </select>
+
+<!--    <select id="selectVoList" resultMap="DutyScheduleInfoListVoResult">-->
+<!--        SELECT-->
+<!--        s.*,-->
+<!--        GROUP_CONCAT(DISTINCT d.dutyName) AS dutyNames-->
+<!--        FROM-->
+<!--        duty_schedule_info s-->
+<!--        LEFT JOIN-->
+<!--        duty_schedule_info_duty sd ON s.scheduleId = sd.scheduleId-->
+<!--        LEFT JOIN-->
+<!--        duty_info d ON sd.dutyId = d.dutyId-->
+<!--        <where>-->
+<!--            <if test="queryBo.scheduleName != null and queryBo.dutyType != ''"> and s.scheduleName like CONCAT('%', #{queryBo.scheduleName}, '%')</if>-->
+<!--            <if test="queryBo.dutyType != null and queryBo.dutyType != ''"> and d.dutyType = #{queryBo.dutyType} </if>-->
+<!--            <if test="queryBo.dutyId != null and queryBo.dutyId != ''"> and FIND_IN_SET(s.dutyIds, #{queryBo.dutyId}) </if>-->
+<!--            <if test="queryBo.startDay != null and queryBo.startDay != ''"> and s.startDay = #{queryBo.startDay} </if>-->
+<!--            <if test="queryBo.endDay != null and queryBo.endDay != ''"> and s.endDay = #{queryBo.endDay} </if>-->
+<!--            <if test="queryBo.calStartDay != null and queryBo.calEndDay != null">-->
+<!--                AND (-->
+<!--                <![CDATA[-->
+<!--                    (startDay <= #{queryBo.calStartDay} AND endDay >= #{queryBo.calStartDay})-->
+<!--                        OR (startDay <= #{queryBo.calEndDay} AND endDay >= #{queryBo.calEndDay})-->
+<!--                        OR (startDay >= #{queryBo.calStartDay} AND endDay <= #{queryBo.calEndDay})-->
+<!--                    ]]>-->
+<!--                )-->
+<!--            </if>-->
+<!--            and s.isDelete = 0-->
+<!--        </where>-->
+<!--        GROUP BY-->
+<!--        s.scheduleId-->
+<!--    </select>-->
+
+
+    <select id="selectStatisticsPage" resultMap="DutyScheduleStatisticsPageVoResult">
+        SELECT
+            tw.workerId,u.userName as workerName,
+            count(tw.scheduleTaskId) as planDays, SUM(time) as planTimes,
+            att.leaveTimes, att.absentTimes, att.expTimes, att.expDays,
+            (count(tw.scheduleTaskId) - ifnull(att.expDays, 0)) as realDays,
+            (SUM(time) - ifnull(att.expTimes, 0)) as realTimes
+        FROM
+            duty_schedule_task_worker tw
+                LEFT JOIN duty_schedule_task t ON tw.scheduleTaskId = t.scheduleTaskId
+                LEFT JOIN duty_schedule_info s ON tw.scheduleId = s.scheduleId
+                LEFT JOIN sys_user_info u ON tw.workerId = u.userId
+                LEFT JOIN (
+        SELECT ta.workerId,
+               ifnull(sum(ta.leaveTime), 0) as leaveTimes,
+               ifnull(sum( ta.absentTime), 0) as absentTimes,
+               (ifnull(sum(ta.leaveTime), 0) + ifnull(sum( ta.absentTime), 0)) AS expTimes,
+               count( DISTINCT ta.scheduleDate ) AS expDays
+        FROM duty_schedule_task_attendance ta
+        <where>
+            <if test="queryBo.scheduleStartDate != null and queryBo.scheduleEndDate != null">
+                and ta.scheduleDate BETWEEN #{queryBo.scheduleStartDate} and #{queryBo.scheduleEndDate}
+            </if>
+        and ta.isDelete = 0
+        </where>
+        GROUP BY
+        ta.workerId
+        ) att ON tw.workerId = att.workerId
+        <where>
+            and t.isDelete = 0
+            <if test="queryBo.scheduleStartDate != null and queryBo.scheduleEndDate != null">
+                and t.scheduleDate BETWEEN #{queryBo.scheduleStartDate} and #{queryBo.scheduleEndDate}
+            </if>
+            <if test="queryBo.workerName != null and queryBo.workerName != null">
+                and u.userName like CONCAT('%', #{queryBo.workerName}, '%')
+            </if>
+        </where>
+        GROUP BY tw.workerId
+    </select>
+
+    <select id="selectSameTimeList" resultType="com.figure.op.duty.domain.vo.DutyScheduleInfoListVo">
+        SELECT
+        si.*
+        FROM
+        duty_schedule_task st LEFT JOIN duty_schedule_info si on st.scheduleId = si.scheduleId
+        WHERE
+        si.stationId = #{bo.stationId} AND
+        scheduleDate BETWEEN #{bo.startDay} AND #{bo.endDay}
+        AND st.isDelete = 0
+        AND si.startTime <![CDATA[ < ]]> #{bo.endTime} AND si.endTime <![CDATA[ > ]]> #{bo.startTime}
+        GROUP BY scheduleId
+    </select>
+
+</mapper>

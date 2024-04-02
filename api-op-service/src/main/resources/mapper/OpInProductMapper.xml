@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.device.mapper.OpInProductMapper">
+
+        <resultMap id="OpInProductPageVoResult" type="com.figure.op.device.domain.vo.OpInProductPageVo">
+        </resultMap>
+
+        <select id="selectVoPage" resultMap="OpInProductPageVoResult">
+                select d.productId, d.productName, d.createUserId, u.userName as createUserName
+                from device_product_info d left join sys_user_info u on d.createUserId = u.userId
+                <where>
+                        <if test="queryBo.productId != null"> and d.productId = #{queryBo.productId} </if>
+                        <if test="queryBo.productName != null and queryBo.productName != ''"> and d.productName like concat('%', #{queryBo.productName}, '%') </if>
+                        and d.isDelete = 0
+                </where>
+                order by d.productId desc
+        </select>
+
+</mapper>

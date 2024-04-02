@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.base.BaseImportantPeriodMapper">
+    
+    <resultMap type="com.figure.core.model.base.BaseImportantPeriod" id="BaseImportantPeriodResult">
+        <result property="importantPeriodId" column="importantPeriodId"/>
+        <result property="importantPeriodName" column="importantPeriodName"/>
+        <result property="startDate" column="startDate"/>
+        <result property="endDate" column="endDate"/>
+        <result property="remark" column="remark"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <sql id="selectBaseImportantPeriodVO">
+        select importantPeriodId, importantPeriodName, startDate, endDate, remark, createUserId, createTime, updateUserId, updateTime from base_important_period
+    </sql>
+
+</mapper>

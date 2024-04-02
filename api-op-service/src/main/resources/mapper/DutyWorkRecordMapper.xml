@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.DutyWorkRecordMapper">
+
+    <resultMap id="DutyWorkRecordPageVoResult" type="com.figure.op.duty.domain.vo.DutyWorkRecordPageVo">
+    </resultMap>
+
+    <resultMap id="DutyWorkRecordListVoResult" type="com.figure.op.duty.domain.vo.DutyWorkRecordListVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="DutyWorkRecordPageVoResult">
+        select r.*, s.scheduleAttr, s.scheduleName, d.dutyName, d.dutyType, s.stationId, si.frontName as stationName,
+               GROUP_CONCAT(DISTINCT u1.userName) AS workerNames,
+               u2.userName as actWorkerName
+               from duty_work_record r
+                   left join duty_work_record_worker rw on r.workRecordId = rw.workRecordId and rw.isDelete = 0
+                   left join duty_schedule_info s on r.scheduleId = s.scheduleId
+                   left join duty_info d on d.dutyId = r.dutyId
+                   left join front_station_info si on s.stationId = si.frontId
+                   left join sys_user_info u1 on rw.workerId = u1.userId
+                   left join sys_user_info u2 on r.actWorkerId = u2.userId
+        <where>
+            <if test="queryBo.scheduleId != null"> and r.scheduleId = #{queryBo.scheduleId} </if>
+            <if test="queryBo.stationId != null"> and s.stationId = #{queryBo.stationId} </if>
+            <if test="queryBo.scheduleName != null and queryBo.scheduleName !=''"> and s.scheduleName like concat('%', #{queryBo.scheduleName},'%') </if>
+            <if test="queryBo.scheduleTaskId != null"> and r.scheduleTaskId = #{queryBo.scheduleTaskId} </if>
+            <if test="queryBo.cate != null and queryBo.cate != ''"> and r.cate = #{queryBo.cate} </if>
+            <if test="queryBo.workerId != null"> and FIND_IN_SET(#{queryBo.workerId}, r.workerIds) > 0 </if>
+            <if test="queryBo.scheduleAttr != null and queryBo.scheduleAttr != ''"> and s.scheduleAttr = #{queryBo.scheduleAttr} </if>
+            <if test="queryBo.startDay != null and queryBo.endDay != null"> and r.recordTime between #{queryBo.startDay} and #{queryBo.endDay} </if>
+            <if test="queryBo.actStartTime != null and queryBo.actEndTime != null"> and r.actTime between #{queryBo.actStartTime} and #{queryBo.actEndTime} </if>
+            <if test="queryBo.actResult != null and queryBo.actResult != ''"> and r.actResult = #{queryBo.actResult} </if>
+            and r.isDelete = 0
+        </where>
+        group by r.workRecordId
+        order by r.workRecordId desc
+    </select>
+
+    <select id="selectVoList" resultMap="DutyWorkRecordListVoResult">
+        select r.*, s.scheduleAttr, s.scheduleName, d.dutyName, d.dutyType,
+        GROUP_CONCAT(DISTINCT u1.userName) AS workerNames,
+        u2.userName as actWorkerName
+        from duty_work_record r
+        left join duty_work_record_worker rw on r.workRecordId = rw.workRecordId
+        left join duty_schedule_info s on r.scheduleId = s.scheduleId
+        left join duty_info d on d.dutyId = r.dutyId
+        left join sys_user_info u1 on rw.workerId = u1.userId
+        left join sys_user_info u2 on r.actWorkerId = u2.userId
+        <where>
+            <if test="queryBo.scheduleId != null"> and r.scheduleId = #{queryBo.scheduleId} </if>
+            <if test="queryBo.scheduleTaskId != null"> and r.scheduleTaskId = #{queryBo.scheduleTaskId} </if>
+            <if test="queryBo.cate != null and queryBo.cate != ''"> and r.cate = #{queryBo.cate} </if>
+            <if test="queryBo.workerName != null and queryBo.workerName != ''"> and u1.userName like concat('%', #{workerName},'%') </if>
+            <if test="queryBo.scheduleAttr != null and queryBo.workerName != ''"> and s.scheduleAttr = #{queryBo.scheduleAttr} </if>
+            <if test="queryBo.startDay != null and queryBo.endDay != null"> and r.recordTime between #{queryBo.startDay} and #{queryBo.endDay} </if>
+            <if test="queryBo.actStartTime != null and queryBo.actEndTime != null"> and r.actTime between #{queryBo.actStartTime} and #{queryBo.actEndTime} </if>
+            <if test="queryBo.actResult != null and queryBo.actResult != ''"> and r.actResult = #{queryBo.actResult} </if>
+            <if test="queryBo.scheduleTaskIds != null and queryBo.scheduleTaskIds != ''"> and r.scheduleTaskId in
+                <foreach collection="queryBo.scheduleTaskIds.split(',')" item="scheduleTaskId" open="(" separator="," close=")">
+                    #{scheduleTaskId}
+                </foreach>
+            </if>
+            and r.isDelete = 0
+        </where>
+        group by r.workRecordId
+        order by r.workRecordId desc
+    </select>
+
+
+<!--    <select id="selectVoList" resultMap="DutyWorkRecordListVoResult">-->
+<!--        select *, ds.scheduleName, ds.scheduleAttr, di.dutyName, di.dutyType, sdd.`label` as scheduleAttrName-->
+<!--        from duty_work_record d left join duty_schedule_info ds on d.scheduleId = ds.scheduleId-->
+<!--        left join duty_info di on di.dutyId = ds.dutyId  left join sys_dict_data sdd on sdd.`value` = ds.scheduleAttr-->
+<!--        <where>-->
+<!--            <if test="queryBo.scheduleId != null"> and d.scheduleId = #{queryBo.scheduleId} </if>-->
+<!--            <if test="queryBo.scheduleName != null"> and ds.scheduleName like concat('%', #{queryBo.scheduleName},'%') </if>-->
+<!--            <if test="queryBo.workerName != null"> and d.workerName = #{queryBo.workerName} </if>-->
+<!--            <if test="queryBo.scheduleAttr != null"> and ds.scheduleAttr = #{queryBo.scheduleAttr} </if>-->
+<!--            <if test="queryBo.startDay != null and queryBo.endDay"> and d.recordTime between #{queryBo.startDay} and #{queryBo.endDay} </if>-->
+<!--            <if test="queryBo.actStartTime != null and queryBo.actEndTime"> and d.actTime between #{queryBo.actStartTime} and #{queryBo.actEndTime} </if>-->
+<!--            <if test="queryBo.actResult != null"> and d.actResult = #{queryBo.actResult} </if>-->
+<!--            <if test="queryBo.dutyStatus != null"> and d.dutyStatus = #{queryBo.dutyStatus} </if>-->
+<!--            <if test="queryBo.calStartTime != null and queryBo.calEndTime != null"> and ds.startDay between #{queryBo.calStartTime} and #{queryBo.calEndTime} </if>-->
+<!--            and d.isDelete = 0-->
+<!--        </where>-->
+<!--        order by d.workRecordId desc-->
+<!--    </select>-->
+</mapper>

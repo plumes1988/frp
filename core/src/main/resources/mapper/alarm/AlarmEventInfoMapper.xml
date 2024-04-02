@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.alarm.AlarmEventInfoMapper">
+
+    <resultMap id="AlarmEventInfoResult" type="com.figure.core.model.alarm.AlarmEventInfo">
+        <result property="eventId" column="eventId"/>
+        <result property="frontId" column="frontId"/>
+        <result property="frontName" column="frontName"/>
+        <result property="systemCode" column="systemCode"/>
+        <result property="systemName" column="systemName"/>
+        <result property="startTime" column="startTime"/>
+        <result property="endTime" column="endTime"/>
+        <result property="duration" column="duration"/>
+        <result property="eventFlag" column="eventFlag"/>
+        <result property="eventType" column="eventType"/>
+        <result property="eventLevel" column="eventLevel"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectAlarmEventInfoVO">
+        select eventId,
+               frontId,
+               frontName,
+               systemCode,
+               systemName,
+               startTime,
+               endTime,
+               duration,
+               eventFlag,
+               eventType,
+               eventLevel,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from alarm_event_info
+    </sql>
+
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicCustomizeInfoParaMapper">
+
+    <resultMap id="LogicCustomizeInfoParaResult" type="com.figure.core.model.logic.LogicCustomizeInfoPara">
+        <result property="id" column="id"/>
+        <result property="customizeId" column="customizeId"/>
+        <result property="logic" column="logic"/>
+        <result property="source" column="source"/>
+        <result property="channelId1" column="channelId1"/>
+        <result property="channelId2" column="channelId2"/>
+        <result property="message" column="message"/>
+        <result property="linkStruct" column="linkStruct"/>
+        <result property="anomalStatus" column="anomalStatus"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicCustomizeInfoParaVO">
+        select id,
+               customizeId,
+               logic,
+               source,
+               channelId1,
+               channelId2,
+               message,
+               linkStruct,
+               anomalStatus,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_customize_info_para
+    </sql>
+    <select id="treelist" resultType="com.figure.core.model.logic.LogicCustomizeInfoParaList">
+        select t.id,
+        t.customizeId,
+        t.logic,
+        t.source,
+        t.channelId1,
+        t.channelId2,
+        t.message,
+        t.linkStruct,
+        t.anomalStatus,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        lci.groupId as groupId,
+        lgi.logicChannelCode as logicChannelCode,
+        sci1.channelName as mainChannelName,
+        sci1.logicPositionId as mainPositionId,
+        sci2.channelName as compareChannelName,
+        sci2.logicPositionId as comparePositionId
+        from logic_customize_info_para t
+        left join logic_customize_info lci on lci.id = t.customizeId
+        left join logic_group_info lgi on lgi.id = lci.groupId
+        left join signal_channel_info sci1 on sci1.channelId = t.channelId1
+        left join signal_channel_info sci2 on sci2.channelId = t.channelId2
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+</mapper>

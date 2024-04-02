@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.transcode.TranscodeTaskInfoMapper">
+
+    <resultMap id="TranscodeTaskInfoResult" type="com.figure.core.model.transcode.TranscodeTaskInfo">
+        <result property="transcodeTaskId" column="transcodeTaskId"/>
+        <result property="transcodeTaskName" column="transcodeTaskName"/>
+        <result property="taskMode" column="taskMode"/>
+        <result property="signalId" column="signalId"/>
+        <result property="sourceURL" column="sourceURL"/>
+        <result property="transcodeRuleId" column="transcodeRuleId"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="useGPU" column="useGPU"/>
+        <result property="inputIP" column="inputIP"/>
+        <result property="outputIP" column="outputIP"/>
+        <result property="taskStatus" column="taskStatus"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectTranscodeTaskInfoVO">
+        select transcodeTaskId,
+               transcodeTaskName,
+               taskMode,
+               signalId,
+               sourceURL,
+               transcodeRuleId,
+               serviceCode,
+               serviceName,
+               useGPU,
+               inputIP,
+               outputIP,
+               taskStatus,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from transcode_task_info
+    </sql>
+
+    <select id="queryTranscodeTaskInfoByServiceId" parameterType="int" resultType="java.util.HashMap">
+        select t.transcodeTaskId,
+               t.transcodeTaskName,
+               t.transcodeRuleId,
+               t.sourceURL,
+               t.useGPU,
+               t.inputIP,
+               t.outputIP,
+               t.taskStatus,
+               t.createUserId,
+               t.createTime,
+               t.updateUserId,
+               t.updateTime,
+               t.isDelete,
+               sci.videoType
+
+        from transcode_task_info t
+                 left join transcode_service_info tsi on tsi.serviceCode = t.serviceCode
+                 left join signal_channel_info sci on sci.channelId = t.signalId
+
+        where tsi.transcodeServiceId = #{transcodeServiceId}
+    </select>
+
+    <select id="getByChannelId" parameterType="java.util.List" resultType="java.util.HashMap">
+        SELECT
+        tti.signalId,
+        tti.transcodeTaskId,
+        tti.transcodeTaskName,
+        tti.sourceURL,
+        tri.mediaType,
+        (case tri.mediaType when 1 then '音频' when 2 then '标清' when 3 then '高清' when 4 then '4K' else null end)
+        mediaTypeName,
+        sci.channelName,
+        fsi.frontId,
+        fsi.frontName,
+        flp.positionId,
+        flp.positionName,
+        sti.signalCode,
+        sti.signalName
+        FROM transcode_task_info tti
+        LEFT JOIN transcode_rule_info tri ON tri.ruleId = tti.transcodeRuleId
+        LEFT JOIN signal_channel_info sci ON sci.channelId = tti.signalId
+        LEFT JOIN front_station_info fsi ON fsi.frontId = sci.frontId
+        LEFT JOIN front_logic_position flp ON flp.positionId = sci.logicPositionId
+        LEFT JOIN signal_type_info sti ON sti.signalCode = sci.signalCode
+        <where>
+            <if test="channelIdList!=null and channelIdList !=''">
+                tti.signalId IN
+                <foreach collection="channelIdList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        GROUP BY tti.transcodeTaskId
+    </select>
+
+    <select id="listByQuery" parameterType="com.figure.core.query.transcode.TranscodeTaskInfoQuery"
+            resultType="com.figure.core.model.transcode.TranscodeTaskInfoList">
+        SELECT
+        tti.transcodeTaskId,
+        tti.transcodeTaskName,
+        tti.signalId,
+        tti.transcodeRuleId,
+        tti.serviceCode,
+        tti.serviceName,
+        tti.sourceURL,
+        tti.useGPU,
+        tti.inputIP,
+        tti.outputIP,
+        tti.taskStatus,
+        tti.createUserId,
+        tti.createTime,
+        tti.updateUserId,
+        tti.updateTime,
+        tti.isDelete,
+        tri.ruleName as transcodeRuleName,
+        tri.isDefault as isDefault,
+        sci.channelName,
+        sci.channelName as signalName,
+        sci.signalCode as signalType,
+        sti.signalName as signalTypeName,
+        di.controlIP as deviceIP,
+        sci.mediaType,
+        sfi.frequencyName,
+        fsi.frontName,
+        flp.positionName,
+        tsi.transcodeServiceName,
+        tsi.transcodeServiceId
+        FROM transcode_task_info tti
+        LEFT JOIN transcode_rule_info tri ON tri.ruleId = tti.transcodeRuleId
+        LEFT JOIN transcode_service_info tsi ON tsi.serviceCode = tti.serviceCode
+        LEFT JOIN device_info di on di.deviceCode = tti.serviceCode
+        LEFT JOIN signal_channel_info sci ON sci.channelId = tti.signalId
+        LEFT JOIN signal_frequency_info sfi ON sfi.frequencyId = sci.frequencyId
+        LEFT JOIN front_station_info fsi ON fsi.frontId = sci.frontId
+        LEFT JOIN front_logic_position flp ON flp.positionId = sci.logicPositionId
+        LEFT JOIN signal_type_info sti ON sti.signalCode = sci.signalCode
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

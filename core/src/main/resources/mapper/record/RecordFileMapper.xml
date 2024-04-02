@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.record.RecordFileMapper">
+
+    <resultMap id="RecordFileResult" type="com.figure.core.model.record.RecordFile">
+        <result property="fileId" column="fileId"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceIP" column="serviceIP"/>
+        <result property="mediaType" column="mediaType"/>
+        <result property="signalId" column="signalId"/>
+        <result property="transcodeRuleId" column="transcodeRuleId"/>
+        <result property="filePath" column="filePath"/>
+        <result property="fileUrl" column="fileUrl"/>
+        <result property="startTime" column="startTime"/>
+        <result property="endTime" column="endTime"/>
+        <result property="fileTime" column="fileTime"/>
+        <result property="alarmRecord" column="alarmRecord"/>
+        <result property="isHLS" column="isHLS"/>
+        <result property="saveFlag" column="saveFlag"/>
+        <result property="saveTime" column="saveTime"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectRecordFileVO">
+        select fileId,
+               serviceCode,
+               serviceIP,
+               mediaType,
+               signalId,
+               transcodeRuleId,
+               filePath,
+               fileUrl,
+               startTime,
+               endTime,
+               fileTime,
+               alarmRecord,
+               isHLS,
+               saveFlag,
+               saveTime,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from record_file
+    </sql>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.multiview.MultiviewLayoutInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.multiview.MultiviewLayoutInfo">
+                    <id column="layoutId" property="layoutId" />
+                    <result column="layoutName" property="layoutName" />
+                    <result column="frontId" property="frontId" />
+                    <result column="resolution" property="resolution" />
+                    <result column="mediaType" property="mediaType" />
+                    <result column="pushStream" property="pushStream" />
+                    <result column="streamUrl" property="streamUrl" />
+                    <result column="streamCodeRate" property="streamCodeRate" />
+                    <result column="createUserId" property="createUserId" />
+                    <result column="createTime" property="createTime" />
+                    <result column="updateUserId" property="updateUserId" />
+                    <result column="updateTime" property="updateTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            layoutId, layoutName, frontId, resolution, mediaType, pushStream, streamUrl, streamCodeRate, createUserId, createTime, updateUserId, updateTime
+        </sql>
+
+</mapper>

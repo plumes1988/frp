@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalAnalysisGroupMapper">
+
+    <resultMap id="SignalAnalysisGroupResult" type="com.figure.core.model.signal.SignalAnalysisGroup">
+        <result property="id" column="id"/>
+        <result property="analysisName" column="analysisName"/>
+        <result property="serverId" column="serverId"/>
+        <result property="channelCode" column="channelCode"/>
+        <result property="streamType" column="streamType"/>
+        <result property="modelId" column="modelId"/>
+        <result property="refSourceType" column="refSourceType"/>
+        <result property="refSourceChannelId" column="refSourceChannelId"/>
+        <result property="comparisonChannelIds" column="comparisonChannelIds"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSignalAnalysisGroupVO">
+        select id,
+               analysisName,
+               serverId,
+               channelCode,
+               streamType,
+               modelId,
+               alarmMode,
+               refSourceType,
+               refSourceChannelId,
+               comparisonChannelIds,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from signal_analysis_group
+    </sql>
+
+    <select id="listByQuery" parameterType="com.figure.core.query.signal.SignalAnalysisGroupQuery"
+            resultType="com.figure.core.model.signal.SignalAnalysisGroupList">
+        select sag.id,
+               sag.analysisName,
+               sag.serverId,
+               sag.channelCode,
+               sag.streamType,
+               sag.modelId,
+               sag.alarmMode,
+               sag.refSourceType,
+               sag.refSourceChannelId,
+               sag.comparisonChannelIds,
+               sag.createUserId,
+               sag.createTime,
+               sag.updateUserId,
+               sag.updateTime,
+               sag.isDelete,
+               di.deviceName   as serverName,
+               slc.channelName as channelCodeName,
+               ltr.modelName   as modelName
+        from signal_analysis_group sag
+                 left join device_info di on sag.serverId = di.deviceId
+                 left join signal_logic_channel slc on sag.channelCode = slc.channelCode
+                 left join logic_threshold_rule ltr on sag.modelId = ltr.modelId
+        #         left join signal_channel_info sci1 on sci1.channelId in (sag.refSourceChannelId)
+#         left join signal_channel_info sci2 on sci2.channelId in (sag.comparisonChannelIds)
+    </select>
+</mapper>

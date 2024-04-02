@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalProgramInfoMapper">
+
+    <resultMap id="SignalProgramInfoResult" type="com.figure.core.model.signal.SignalProgramInfo">
+        <result property="id" column="id"/>
+        <result property="columnId" column="columnId"/>
+        <result property="logicChannelId" column="logicChannelId"/>
+        <result property="epgId" column="epgId"/>
+        <result property="programName" column="programName"/>
+        <result property="startDate" column="startDate"/>
+        <result property="programLen" column="programLen"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSignalProgramInfoVO">
+        select id,
+               columnId,
+               logicChannelId,
+               epgId,
+               programName,
+               startDate,
+               programLen,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from signal_program_info
+    </sql>
+
+</mapper>

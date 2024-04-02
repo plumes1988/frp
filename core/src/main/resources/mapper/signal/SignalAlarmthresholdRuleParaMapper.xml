@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalAlarmthresholdRuleParaMapper">
+
+    <resultMap id="SignalAlarmthresholdRuleParaResult" type="com.figure.core.model.signal.SignalAlarmthresholdRulePara">
+        <result property="paraId" column="paraId"/>
+        <result property="ruleId" column="ruleId"/>
+        <result property="alarmTypeId" column="alarmTypeId"/>
+        <result property="alarmTypeName" column="alarmTypeName"/>
+        <result property="alarmTypeAlias" column="alarmTypeAlias"/>
+        <result property="alarmSource" column="alarmSource"/>
+        <result property="indicatorNO" column="indicatorNO"/>
+        <result property="alarmValue" column="alarmValue"/>
+        <result property="alarmSensitivity" column="alarmSensitivity"/>
+        <result property="alarmDelay" column="alarmDelay"/>
+        <result property="alarmRecoveryDelay" column="alarmRecoveryDelay"/>
+        <result property="leftTopX" column="leftTopX"/>
+        <result property="leftTopY" column="leftTopY"/>
+        <result property="rightBottomX" column="rightBottomX"/>
+        <result property="rightBottomY" column="rightBottomY"/>
+    </resultMap>
+
+    <sql id="selectSignalAlarmthresholdRuleParaVO">
+        select paraId,
+               ruleId,
+               alarmTypeId,
+               alarmTypeName,
+               alarmTypeAlias,
+               alarmSource,
+               indicatorNO,
+               alarmValue,
+               alarmSensitivity,
+               alarmDelay,
+               alarmRecoveryDelay,
+               leftTopX,
+               leftTopY,
+               rightBottomX,
+               rightBottomY,
+               isDelete,
+               isEnable
+        from signal_alarmthreshold_rule_para
+    </sql>
+
+    <select id="listByQuery" parameterType="com.figure.core.query.signal.SignalAlarmthresholdRuleParaQuery"
+            resultType="com.figure.core.model.signal.SignalAlarmthresholdRulePara">
+        select paraId,
+        ruleId,
+        alarmTypeId,
+        alarmTypeName,
+        alarmTypeAlias,
+        alarmSource,
+        indicatorNO,
+        alarmValue,
+        alarmSensitivity,
+        alarmDelay,
+        alarmRecoveryDelay,
+        leftTopX,
+        leftTopY,
+        rightBottomX,
+        rightBottomY,
+        isDelete,
+        isEnable
+        from signal_alarmthreshold_rule_para
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

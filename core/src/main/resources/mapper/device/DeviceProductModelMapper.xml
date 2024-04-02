@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceProductModelMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceProductModel">
+                    <id column="modelId" property="modelId" />
+                    <result column="deviceTypeCode" property="deviceTypeCode" />
+                    <result column="deviceSubTypeCode" property="deviceSubTypeCode" />
+                    <result column="productId" property="productId" />
+                    <result column="modelCode" property="modelCode" />
+                    <result column="img" property="img" />
+                    <result column="files" property="files" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            modelId, deviceTypeCode, deviceSubTypeCode, productId, modelCode, img, files
+        </sql>
+
+</mapper>

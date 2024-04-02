@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicCustomizeModelMapper">
+
+    <resultMap id="LogicCustomizeModelResult" type="com.figure.core.model.logic.LogicCustomizeModel">
+        <result property="id" column="id"/>
+        <result property="customizeModelName" column="customizeModelName"/>
+        <result property="groupModelId" column="groupModelId"/>
+        <result property="description" column="description"/>
+        <result property="lineMode" column="lineMode"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicCustomizeModelVO">
+        select id,
+               customizeModelName,
+               groupModelId,
+               description,
+               lineMode,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_customize_model
+    </sql>
+
+</mapper>

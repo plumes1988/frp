@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.record.RecordClusterInfoMapper">
+
+    <resultMap id="RecordClusterInfoResult" type="com.figure.core.model.record.RecordClusterInfo">
+        <result property="recordClusterId" column="recordClusterId"/>
+        <result property="recordClusterName" column="recordClusterName"/>
+        <result property="totalBitRate" column="totalBitRate"/>
+        <result property="usedBitRate" column="usedBitRate"/>
+        <result property="frontId" column="frontId"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectRecordClusterInfoVO">
+        select recordClusterId,
+               recordClusterName,
+               totalBitRate,
+               usedBitRate,
+               frontId,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from record_cluster_info
+    </sql>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceIndicatorParamRelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceIndicatorParamRel">
+        <result column="id" property="id"/>
+        <result column="deviceId" property="deviceId"/>
+        <result column="indicatorCode" property="indicatorCode"/>
+        <result column="indicatorValue" property="indicatorValue"/>
+        <result column="alarmStatus" property="alarmStatus"/>
+        <result column="enableMonitor" property="enableMonitor"/>
+        <result column="monitorInterval" property="monitorInterval"/>
+        <result column="enableAlarm" property="enableAlarm"/>
+        <result column="indicatorRuleIds" property="indicatorRuleIds"/>
+        <result column="communicateMode" property="communicateMode"/>
+        <result column="responseParams" property="responseParams"/>
+        <result column="responseParseScript" property="responseParseScript"/>
+        <result column="enableSetting" property="enableSetting"/>
+        <result column="requestParams" property="requestParams"/>
+        <result column="requestParseScript" property="requestParseScript"/>
+        <result column="checkMode" property="checkMode"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="collectTime" property="collectTime"/>
+        <result column="recordMode" property="recordMode"/>
+        <result column="changeThreshold" property="changeThreshold"/>
+        <result column="retentionTime" property="retentionTime"/>
+        <result column="deviceCode" property="deviceCode"/>
+        <result column="serverCode" property="serverCode"/>
+        <association property="serverCode" column="deviceId"
+                     javaType="com.figure.core.model.device.DeviceCollectServer">
+            <id column="serverId" property="serverId"/>
+            <result column="serverCode" property="serverCode"/>
+            <result column="serverName" property="serverName"/>
+            <result column="deviceId" property="deviceId"/>
+            <result column="controlIP" property="controlIP"/>
+            <result column="dataIP" property="dataIP"/>
+        </association>
+
+        <association property="deviceCode" column="deviceId" javaType="com.figure.core.model.device.DeviceInfo">
+            <id column="deviceId" property="deviceId"/>
+            <result column="deviceName" property="deviceName"/>
+            <result column="deviceCode" property="deviceCode"/>
+            <result column="deviceType" property="deviceType"/>
+            <result column="deviceSubType" property="deviceSubType"/>
+            <result column="imgURL" property="imgURL"/>
+            <result column="signalType" property="signalType"/>
+            <result column="interfaceCount" property="interfaceCount"/>
+            <result column="monitorStationId" property="monitorStationId"/>
+            <result column="logicPositionId" property="logicPositionId"/>
+            <result column="locateId" property="locateId"/>
+            <result column="cab" property="cab"/>
+            <result column="uOfCab" property="uOfCab"/>
+            <result column="slot" property="slot"/>
+            <result column="parentDeviceId" property="parentDeviceId"/>
+            <result column="serialNo" property="serialNo"/>
+            <result column="assetNo" property="assetNo"/>
+            <result column="buyDate" property="buyDate"/>
+            <result column="useDate" property="useDate"/>
+            <result column="controlIP" property="controlIP"/>
+            <result column="dataIPs" property="dataIPs"/>
+            <result column="remark" property="remark"/>
+            <result column="syncStatus" property="syncStatus"/>
+            <result column="createUserId" property="createUserId"/>
+            <result column="createTime" property="createTime"/>
+            <result column="updateUserId" property="updateUserId"/>
+            <result column="updateTime" property="updateTime"/>
+            <result column="isDelete" property="isDelete"/>
+            <result column="productId" property="productId"/>
+            <result column="modelId" property="modelId"/>
+            <result column="ratedPower" property="ratedPower"/>
+            <result column="weight" property="weight"/>
+            <result column="threeDModelId" property="threeDModelId"/>
+            <result column="communicationPara" property="communicationPara"/>
+            <result column="underController" property="underController"/>
+            <result column="netMagMode" property="netMagMode"/>
+            <result column="deviceStructure" property="deviceStructure"/>
+            <result column="uOfCost" property="uOfCost"/>
+            <result column="collectServerCode" property="collectServerCode"/>
+            <result column="enableAlarmMonitor" property="enableAlarmMonitor"/>
+            <result column="script" property="script"/>
+            <result column="alarmTemplateId" property="alarmTemplateId"/>
+            <result column="communicationParaForAlarm" property="communicationParaForAlarm"/>
+            <result column="useStatus" property="useStatus"/>
+            <result column="slotOfCost" property="slotOfCost"/>
+            <result column="slotOfNum" property="slotOfNum"/>
+            <result column="uHeight" property="uHeight"/>
+            <result column="lastMaintainTime" property="lastMaintainTime"/>
+        </association>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        ,deviceId, indicatorCode, indicatorValue, alarmStatus, enableMonitor, monitorInterval, enableAlarm, indicatorRuleIds, communicateMode, responseParams, responseParseScript, enableSetting, requestParams, requestParseScript, checkMode, updateTime, collectTime, recordMode, changeThreshold, retentionTime
+    </sql>
+
+</mapper>

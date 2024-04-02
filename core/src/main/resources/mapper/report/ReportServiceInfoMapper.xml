@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.report.ReportServiceInfoMapper">
+
+    <resultMap id="ReportServiceInfoResult" type="com.figure.core.model.report.ReportServiceInfo">
+        <result property="id" column="id"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="deviceID" column="deviceID"/>
+        <result property="serviceIP" column="serviceIP"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectReportServiceInfoVO">
+        select id,
+               serviceName,
+               serviceCode,
+               deviceID,
+               serviceIP,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from report_service_info
+    </sql>
+    <select id="listRel" resultType="com.figure.core.model.report.ReportServiceInfoList">
+        select t.id,
+        t.serviceName,
+        t.serviceCode,
+        t.deviceID,
+        t.serviceIP,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        rdi.id as relId,
+        rdi.deviceCode,
+        rdi.systemID,
+        rdi.typeKeywords,
+        rdi.featureType,
+        rdi.deviceIdx,
+        rdi.reportServiceCode
+        from report_service_info t
+        left join report_device_info rdi on rdi.reportServiceCode = t.serviceCode
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+    <select id="getDetailById" resultType="java.util.HashMap">
+        select t.id,
+               t.serviceName,
+               t.serviceCode,
+               t.deviceID,
+               t.serviceIP,
+               t.createUserId,
+               t.createTime,
+               t.updateUserId,
+               t.updateTime,
+               t.isDelete,
+               di.deviceName,
+               di.deviceCode,
+               di.deviceId,
+               fsi.frontName,
+               flp.positionName,
+               dt1.typeName as deviceTypeName,
+               dt2.typeName as deviceSubTypeName,
+               di.controlIP,
+               di.dataIPs
+        from report_service_info t
+                 left join device_info di on di.deviceCode = t.serviceCode
+                 left join front_station_info fsi on fsi.frontId = di.monitorStationId
+                 left join front_logic_position flp on flp.positionId = di.logicPositionId
+                 left join device_type dt1 on dt1.typeCode = di.deviceType
+                 left join device_type dt2 on dt2.typeCode = di.deviceSubType
+        where t.id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.alarm.AlarmSwitchEventInfoMapper">
+
+    <resultMap id="AlarmSwitchEventInfoResult" type="com.figure.core.model.alarm.AlarmSwitchEventInfo">
+        <result property="eventId" column="eventId"/>
+        <result property="frontId" column="frontId"/>
+        <result property="frontName" column="frontName"/>
+        <result property="systemCode" column="systemCode"/>
+        <result property="systemName" column="systemName"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="deviceCode" column="deviceCode"/>
+        <result property="deviceName" column="deviceName"/>
+        <result property="isAuto" column="isAuto"/>
+        <result property="userId" column="userId"/>
+        <result property="actionMode" column="actionMode"/>
+        <result property="actionInfo" column="actionInfo"/>
+        <result property="actionTime" column="actionTime"/>
+        <result property="actionDuration" column="actionDuration"/>
+        <result property="isSuccess" column="isSuccess"/>
+        <result property="alarmContent" column="alarmContent"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectAlarmSwitchEventInfoVO">
+        select eventId,
+               frontId,
+               frontName,
+               systemCode,
+               systemName,
+               serviceCode,
+               serviceName,
+               deviceCode,
+               deviceName,
+               isAuto,
+               userId,
+               actionMode,
+               actionInfo,
+               actionTime,
+               actionDuration,
+               isSuccess,
+               alarmContent,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from alarm_switch_event_info
+    </sql>
+
+</mapper>

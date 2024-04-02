@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.visual.VisualChainMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.visual.VisualChain">
+            <id column="chainId" property="chainId" />
+            <result column="chainName" property="chainName" />
+            <result column="stationId" property="stationId" />
+            <result column="chainType" property="chainType" />
+            <result column="alarmFilterStatus" property="alarmFilterStatus" />
+            <result column="resolution" property="resolution" />
+            <result column="createUserId" property="createUserId" />
+            <result column="createTime" property="createTime" />
+            <result column="updateUserId" property="updateUserId" />
+            <result column="updateTime" property="updateTime" />
+            <result column="status" property="status" />
+            <result column="img" property="img" />
+            <result column="json" property="json" />
+            <result column="channelIdsMap" property="channelIdsMap" />
+            <result column="deiveIdsMap" property="deiveIdsMap" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            chainId, chainName, stationId, chainType, alarmFilterStatus, resolution, createUserId, createTime, updateUserId, updateTime, status, img, json, channelIdsMap, deiveIdsMap
+        </sql>
+
+</mapper>

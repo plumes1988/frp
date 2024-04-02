@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.sys.SysRoleInfoMapper">
+    <resultMap type="com.figure.core.model.sys.SysRoleInfo" id="SysRoleInfoResult">
+        <result property="roleId" column="roleId"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleNotes" column="roleNotes"/>
+        <result property="qxValue" column="qxValue"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <sql id="selectRoleInfoVO">
+        select roleId, roleName, roleNotes, qxValue, createUserId, createTime, updateUserId, updateTime from sys_role_info
+    </sql>
+
+
+</mapper>

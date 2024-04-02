@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.figure.core.tdrepository.TDSpectrumAlarmTraceDataMapper">
+    <resultMap id="SpectrumRecordTracedataResult" type="com.figure.core.model.spectrum.SpectrumAlarmTracedata">
+        <result property="alarmId" column="alarmId"/>
+        <result property="traceData" column="traceData"/>
+        <result property="traceDataAverage" column="traceDataAverage"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <insert id="saveEntity" parameterType="com.figure.core.model.spectrum.SpectrumAlarmTracedata">
+        insert into spectrum_alarm_tracedata_#{spectrumCode} using spectrum_alarm_tracedata
+            TAGS (#{serviceCode},#{spectrumCode})
+            (createTime, traceData, traceDataAverage, alarmId)
+        values (#{createTime}, #{traceData}, #{traceDataAverage}, #{alarmId})
+    </insert>
+
+    <select id="listByWrapper" resultType="com.figure.core.model.spectrum.SpectrumAlarmTracedata" parameterType="com.figure.core.model.spectrum.SpectrumAlarmTracedata">
+        select alarmId,
+        traceData,
+        traceDataAverage,
+        createTime,
+        serviceCode,
+        spectrumCode
+        from spectrum_alarm_tracedata#{tableName}
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+    <select id="selectEntityPage" resultType="com.figure.core.model.spectrum.SpectrumAlarmTracedata">
+        select alarmId,
+        traceData,
+        traceDataAverage,
+        createTime,
+        serviceCode,
+        spectrumCode
+        from spectrum_alarm_tracedata
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        <if test="ew.emptyOfWhere == true">
+            ${ew.sqlSegment}
+        </if>
+        <if test="size != null and offset !=null">
+            LIMIT #{size} OFFSET #{offset}
+        </if>
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(*) from spectrum_alarm_tracedata
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.device.mapper.DeviceInfoMapper">
+
+        <resultMap id="DeviceProductInfoPageVoResult" type="com.figure.op.device.domain.vo.DeviceInfoPageVo">
+        </resultMap>
+
+        <select id="selectVoPage" resultMap="DeviceProductInfoPageVoResult">
+                select d.productId, d.productName, d.createUserId, u.userName as createUserName
+                from device_product_info d left join sys_user_info u on d.createUserId = u.userId
+                <where>
+                        <if test="queryBo.productId != null"> and d.productId = #{queryBo.productId} </if>
+                        <if test="queryBo.productName != null and queryBo.productName != ''"> and d.productName like concat('%', #{queryBo.productName}, '%') </if>
+                        and d.isDelete = 0
+                </where>
+                order by d.productId desc
+        </select>
+
+    <select id="selectMonitorStationList" resultType="com.figure.op.device.domain.vo.MonitorStationVo">
+            select frontId, frontName from front_station_info where isDelete = 0
+    </select>
+    <select id="selectLogicPositionList" resultType="com.figure.op.device.domain.vo.LogicPositionVo">
+            select positionId, positionName from front_logic_position where  isDelete = 0
+    </select>
+    <select id="selectDeviceTypeList" resultType="java.lang.String">
+            select deviceType from device_info where isDelete = 0 group by deviceType
+    </select>
+    <select id="selectDeviceSubTypeList" resultType="java.lang.String">
+            select deviceSubType from device_info where isDelete = 0 group by deviceSubType
+    </select>
+    <select id="selectModelList" resultType="com.figure.op.device.domain.vo.ModelVo">
+            select modelId, modelCode from device_product_model
+        <where>
+            <if test="brandId != null">
+                and productId = #{brandId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectProductInfoList" resultType="com.figure.op.device.domain.vo.DeviceProductInfoVo">
+         select productId, productName from device_product_info where isDelete = 0
+    </select>
+
+
+</mapper>

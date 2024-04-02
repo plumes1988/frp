@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.DutyInfoMapper">
+    
+    <resultMap type="DutyInfo" id="DutyInfoResult">
+        <result property="dutyId"    column="dutyId"    />
+        <result property="dutyName"    column="dutyName"    />
+        <result property="dutyType"    column="dutyType"    />
+        <result property="dutyDesc"    column="dutyDesc"    />
+        <result property="createUserId"    column="createUserId"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="updateUserId"    column="updateUserId"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="isDelete"    column="isDelete"    />
+    </resultMap>
+
+    <sql id="selectDutyInfoVo">
+        select dutyId, dutyName, dutyType, dutyDesc, createUserId, createTime, updateUserId, updateTime, isDelete from duty_info
+    </sql>
+
+    <select id="selectDutyInfoList" parameterType="DutyInfo" resultMap="DutyInfoResult">
+        <include refid="selectDutyInfoVo"/>
+        <where>  
+            <if test="dutyName != null  and dutyname != ''"> and dutyName like concat('%', #{dutyName}, '%')</if>
+            <if test="dutyType != null  and dutytype != ''"> and dutyType = #{dutyType}</if>
+            <if test="dutyDesc != null  and dutydesc != ''"> and dutyDesc = #{dutyDesc}</if>
+            <if test="createUserId != null "> and createUserId = #{createUserId}</if>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="updateUserId != null "> and updateUserId = #{updateUserId}</if>
+            <if test="updateTime != null "> and updateTime = #{updateTime}</if>
+            <if test="isDelete != null "> and isDelete = #{isDelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectDutyInfoByDutyId" parameterType="Long" resultMap="DutyInfoResult">
+        <include refid="selectDutyInfoVo"/>
+        where dutyId = #{dutyId}
+    </select>
+        
+    <insert id="insertDutyInfo" parameterType="DutyInfo" useGeneratedKeys="true" keyProperty="dutyid">
+        insert into duty_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dutyName != null">dutyName,</if>
+            <if test="dutyType != null">dutyType,</if>
+            <if test="dutyDesc != null">dutyDesc,</if>
+            <if test="createUserId != null">createUserId,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="updateUserId != null">updateUserId,</if>
+            <if test="updateTime != null">updateTime,</if>
+            <if test="isDelete != null">isDelete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dutyName != null">#{dutyName},</if>
+            <if test="dutyType != null">#{dutyType},</if>
+            <if test="dutyDesc != null">#{dutyDesc},</if>
+            <if test="createUserId != null">#{createUserId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateUserId != null">#{updateUserId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDutyInfo" parameterType="DutyInfo">
+        update duty_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dutyName != null">dutyName = #{dutyName},</if>
+            <if test="dutyType != null">dutyType = #{dutyType},</if>
+            <if test="dutyDesc != null">dutyDesc = #{dutyDesc},</if>
+            <if test="createUserId != null">createUserId = #{createUserId},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="updateUserId != null">updateUserId = #{updateUserId},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+            <if test="isDelete != null">isDelete = #{isDelete},</if>
+        </trim>
+        where dutyId = #{dutyId}
+    </update>
+
+    <delete id="deleteDutyInfoByDutyId" parameterType="Long">
+        delete from duty_info where dutyId = #{dutyId}
+    </delete>
+
+    <delete id="deleteDutyInfoByDutyIds" parameterType="String">
+        delete from duty_info where dutyId in 
+        <foreach item="dutyId" collection="array" open="(" separator="," close=")">
+            #{dutyid}
+        </foreach>
+    </delete>
+
+    <resultMap id="DutyInfoPageVoResult" type="com.figure.op.duty.domain.vo.DutyInfoPageVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="DutyInfoPageVoResult">
+        select *
+        from duty_info d
+        <where>
+            <if test="queryBo.dutyId != null"> and d.dutyId = #{queryBo.dutyId} </if>
+            <if test="queryBo.dutyName != null and queryBo.dutyName != ''"> and d.dutyName like concat('%', #{queryBo.dutyName}, '%') </if>
+            and d.isDelete = 0
+        </where>
+        order by d.dutyId desc
+    </select>
+</mapper>

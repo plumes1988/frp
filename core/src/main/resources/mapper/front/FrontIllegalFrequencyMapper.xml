@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.front.FrontIllegalFrequencyMapper">
+    
+    <resultMap type="com.figure.core.model.front.FrontIllegalFrequency" id="FrontIllegalFrequencyResult">
+        <result property="frontId" column="frontId"/>
+        <result property="recordNewFreSwitch" column="recordNewFreSwitch"/>
+        <result property="recordWhitelistSwitch" column="recordWhitelistSwitch"/>
+        <result property="looprecordIllegalSwitch" column="looprecordIllegalSwitch"/>
+        <result property="illegalRecordDuration" column="illegalRecordDuration"/>
+        <result property="illegalAlarmDelay" column="illegalAlarmDelay"/>
+        <result property="illegalAlarmRecoveryDelay" column="illegalAlarmRecoveryDelay"/>
+        <result property="useSpectrum" column="useSpectrum"/>
+        <result property="spectrumId" column="spectrumId"/>
+        <result property="spectrumCardinals" column="spectrumCardinals"/>
+        <result property="spectrumRecord" column="spectrumRecord"/>
+        <result property="spectrumRecordInterval" column="spectrumRecordInterval"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <sql id="selectFrontIllegalFrequencyVO">
+        select frontId, recordNewFreSwitch, recordWhitelistSwitch, looprecordIllegalSwitch, illegalRecordDuration, illegalAlarmDelay, illegalAlarmRecoveryDelay, useSpectrum, spectrumId, spectrumCardinals, spectrumRecord, spectrumRecordInterval, createUserId, createTime, updateUserId, updateTime from front_illegal_frequency
+    </sql>
+
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.system.mapper.OutPriceInfoMapper">
+
+        <resultMap id="OutPriceInfoPageVoResult" type="com.figure.op.system.domain.vo.OutPriceInfoPageVo">
+        </resultMap>
+
+        <select id="selectVoPage" resultMap="OutPriceInfoPageVoResult">
+                select *
+                from know_info t
+                <where>
+                        <if test="queryBo.knowKeywords != null"> and t.knowKeywords like concat('%', #{queryBo.knowKeywords}, '%')  </if>
+                        <if test="queryBo.topic != null"> and t.topic  = #{queryBo.topic} </if>
+                        <if test="queryBo.deviceId != null"> and t.deviceId  = #{queryBo.deviceId} </if>
+                        and d.isDelete = 0
+                </where>
+                order by t.knowId desc
+        </select>
+
+        <select id="calPrice" resultType="com.figure.op.system.domain.vo.PriceVo">
+                SELECT SUM(o.price) as amount,  DATE_FORMAT(o.reviewTime, #{bo.timeStr}) as `time`
+                from out_price_info o
+                <where>
+                        <if test="bo.start != null and bo.end != null"> and o.reviewTime BETWEEN #{bo.start} AND #{bo.end} </if>
+                        and o.status = '2'
+                        and o.isDelete = 0
+                </where>
+                GROUP BY DATE_FORMAT(o.reviewTime, #{bo.timeStr})
+        </select>
+
+        <select id="getTotalByPlanWithoutOrgan" resultType="BigDecimal">
+                select sum(price) from out_price_info
+                <where>
+                        and isDelete = 0
+                        and status = '2'
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+        </select>
+
+        <select id="getTotalByPlan" resultType="BigDecimal">
+                select sum(price) from out_price_info
+                <where>
+                        and isDelete = 0
+                        and status = '2'
+                        and organ = #{organ}
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+        </select>
+
+        <select id="getSumGroupByUse" resultType="java.util.Map">
+                select useInfo, sum(price) as total
+                from out_price_info
+                <where>
+                        and isDelete = 0
+                        and status = '2'
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+                group by useInfo
+        </select>
+
+        <select id="getSumGroupBySourceWithoutOrgan" resultType="java.util.Map">
+                select source, sum(price) as total
+                from out_price_info
+                <where>
+                        and isDelete = 0
+                        and status = '2'
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+                group by source
+        </select>
+
+        <select id="getSumGroupBySource" resultType="java.util.Map">
+                select source, sum(price) as total
+                from out_price_info
+                <where>
+                        and isDelete = 0
+                        and status = '2'
+                        and organ = #{organ}
+                        <if test="start != null and end != null"> and reviewTime BETWEEN #{start} AND #{end} </if>
+                </where>
+                group by source
+        </select>
+
+
+
+
+</mapper>

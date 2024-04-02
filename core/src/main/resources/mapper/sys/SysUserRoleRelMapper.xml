@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.sys.SysUserRoleRelMapper">
+    <resultMap type="com.figure.core.model.sys.SysUserRoleRel" id="SysUserRoleRelResult">
+        <result property="userId" column="userId"/>
+        <result property="roleId" column="roleId"/>
+    </resultMap>
+
+    <sql id="selectRoleMonitorStationRelVO">
+        select roleId, monitorstationId from sys_role_monitor_station_rel
+    </sql>
+</mapper>

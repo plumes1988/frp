@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceDataAnalysisStrategyMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceDataAnalysisStrategy">
+                    <result column="strategyId" property="strategyId" />
+                    <result column="strategyName" property="strategyName" />
+                    <result column="indicatorCode" property="indicatorCode" />
+                    <result column="analysisMode" property="analysisMode" />
+                    <result column="config" property="config" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            strategyId, strategyName, indicatorCode, analysisMode, config
+        </sql>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.base.BaseAgencyInfoMapper">
+    
+    <resultMap type="com.figure.core.model.base.BaseAgencyInfo" id="BaseAgencyInfoResult">
+        <result property="agencyId" column="agencyId"/>
+        <result property="agencyName" column="agencyName"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <sql id="selectBaseAgencyInfoVO">
+        select agencyId, agencyName, createUserId, createTime, updateUserId, updateTime from base_agency_info
+    </sql>
+
+</mapper>

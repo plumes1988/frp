@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceServiceAlarmMessageMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceServiceAlarmMessage">
+                    <id column="alarmId" property="alarmId" />
+                    <result column="serviceCode" property="serviceCode" />
+                    <result column="serviceName" property="serviceName" />
+                    <result column="serviceType" property="serviceType" />
+                    <result column="alarmType" property="alarmType" />
+                    <result column="alarmMsg" property="alarmMsg" />
+                    <result column="happenTime" property="happenTime" />
+                    <result column="endTime" property="endTime" />
+                    <result column="continueTime" property="continueTime" />
+                    <result column="status" property="status" />
+                    <result column="confirm" property="confirm" />
+                    <result column="result" property="result" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            alarmId, serviceCode, serviceName, serviceType, alarmType, alarmMsg, happenTime, endTime, continueTime, status, confirm, result
+        </sql>
+
+</mapper>

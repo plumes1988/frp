@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.others.CommonMapper">
+
+    <delete id="DeleteTableData" parameterType="java.util.Map">
+        DELETE FROM ${conditions.tableName}
+        <where>
+            <if test="conditions.condition != null">
+                ${conditions.condition}
+            </if>
+        </where>
+    </delete>
+
+    <select id="table" resultType="java.util.HashMap"
+            parameterType="java.util.Map">
+        SELECT column_name,
+                column_comment FROM information_schema.columns
+        WHERE  table_name = #{conditions.tableName}
+    </select>
+
+    <select id="tableData" resultType="java.util.HashMap"
+            parameterType="java.util.Map">
+        SELECT  * FROM ${conditions.tableName}
+        <where>
+            <if test="conditions.condition != null">
+                ${conditions.condition}
+            </if>
+            <if test="conditions.order != null">
+                AND  ${conditions.order}
+            </if>
+        </where>
+    </select>
+
+    <select id="tableDataCount" resultType="java.util.HashMap"
+            parameterType="java.util.Map">
+        SELECT count(*) count FROM ${conditions.tableName}
+        <where>
+            <if test="conditions.condition != null">
+                ${conditions.condition}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getTableMate" resultType="java.util.HashMap"
+            parameterType="java.util.Map">
+        select t.COLUMN_NAME, t.COLUMN_COMMENT ,t.DATA_TYPE,t.TABLE_NAME, td.cnTbaleName as TABLE_COMMENT from t_dv_table td left join information_schema.columns t on td.tableName = t.TABLE_NAME left join information_schema.tables t1 on t.table_name = t1.table_name and t.table_schema = t1.table_schema where 1=1
+        <if test="conditions.tableName != null">
+            t.TABLE_NAME = #{conditions.tableName}
+        </if>
+        <if test="conditions.columnName != null">
+            AND t.COLUMN_NAME = #{conditions.columnName}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.log.LogDeviceStateIndicatorChangeMapper">
+
+    <resultMap id="LogDeviceStateIndicatorChangeResult" type="com.figure.core.model.log.LogDeviceStateIndicatorChange">
+        <result property="id" column="id"/>
+        <result property="frontId" column="frontId"/>
+        <result property="deviceCode" column="deviceCode"/>
+        <result property="indicatorCode" column="indicatorCode"/>
+        <result property="oldIndicatorValue" column="oldIndicatorValue"/>
+        <result property="newIndicatorValue" column="newIndicatorValue"/>
+        <result property="changeTime" column="changeTime"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogDeviceStateIndicatorChangeVO">
+        select id,
+               frontId,
+               deviceCode,
+               indicatorCode,
+               oldIndicatorValue,
+               newIndicatorValue,
+               changeTime,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from log_device_state_indicator_change
+    </sql>
+
+</mapper>

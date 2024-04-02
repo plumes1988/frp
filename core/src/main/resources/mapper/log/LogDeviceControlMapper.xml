@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.log.LogDeviceControlMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.log.LogDeviceControl">
+                <result column="id" property="id" />
+                    <result column="requestId" property="requestId" />
+                    <result column="requestTime" property="requestTime" />
+                    <result column="deviceCode" property="deviceCode" />
+                    <result column="indicatorCode" property="indicatorCode" />
+                    <result column="serverCode" property="serverCode" />
+                    <result column="indicatorValue" property="indicatorValue" />
+                    <result column="operatorUserId" property="operatorUserId" />
+                    <result column="responseContent" property="responseContent" />
+                    <result column="responseTime" property="responseTime" />
+                    <result column="requestStatus" property="requestStatus" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+                id,
+            requestId, requestTime, deviceCode, indicatorCode, serverCode, indicatorValue, operatorUserId, responseContent, responseTime, requestStatus
+        </sql>
+
+</mapper>

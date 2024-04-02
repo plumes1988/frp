@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.RepairTaskInfoMapper">
+
+    <resultMap id="RepairTaskInfoPageVoResult" type="com.figure.op.duty.domain.vo.RepairTaskInfoPageVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="RepairTaskInfoPageVoResult">
+        select *
+        from repair_task_info d
+        <where>
+            d.isDelete = 0
+        </where>
+        order by d.repairTaskId desc
+    </select>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into repair_task_info (repairPlanId, taskName, repairStation, taskDate, taskStartTime, taskEndTime, createUserId, createTime, updateTime, taskStatus)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.repairPlanId}, #{item.taskName}, #{item.repairStation}, #{item.taskDate}, #{item.taskStartTime}, #{item.taskEndTime}, #{item.createUserId}, #{item.createTime}, #{item.updateTime}, #{item.taskStatus})
+        </foreach>
+    </insert>
+
+    <select id="selectByIdLock" resultType="com.figure.op.duty.domain.RepairTaskInfo">
+        select *
+        from repair_task_info
+        where repairTaskId = #{repairTaskId} and isDelete = 0
+        for update
+    </select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.system.mapper.KnowInfoMapper">
+
+        <resultMap id="KnowInfoPageVoResult" type="com.figure.op.system.domain.vo.KnowInfoPageVo">
+        </resultMap>
+
+        <select id="selectVoPage" resultMap="KnowInfoPageVoResult">
+                select *
+                from know_info t
+                <where>
+                        <if test="queryBo.knowKeywords != null"> and t.knowKeywords like concat('%', #{queryBo.knowKeywords}, '%')  </if>
+                        <if test="queryBo.topic != null"> and t.topic  = #{queryBo.topic} </if>
+                        <if test="queryBo.deviceId != null"> and t.deviceId  = #{queryBo.deviceId} </if>
+                        and d.isDelete = 0
+                </where>
+                order by t.knowId desc
+        </select>
+
+</mapper>

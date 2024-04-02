@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.base.BaseDataBackupMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.base.BaseDataBackup">
+                    <id column="backupId" property="id" />
+                    <result column="backupObject" property="backupObject" />
+                    <result column="backupTime" property="backupTime" />
+                    <result column="backupFileName" property="backupFileName" />
+                    <result column="backupMode" property="backupMode" />
+                    <result column="backRetentionTime" property="backRetentionTime" />
+                    <result column="dataRetentionTime" property="dataRetentionTime" />
+                    <result column="excuteUserId" property="excuteUserId" />
+                    <result column="excuteTime" property="excuteTime" />
+                    <result column="finishTime" property="finishTime" />
+                    <result column="excuteStatus" property="excuteStatus" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            backupId, backupObject, backupTime, backupFileName, backupMode, excuteUserId, excuteTime, finishTime, retentionTime, excuteStatus
+        </sql>
+
+</mapper>

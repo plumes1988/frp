@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.system.mapper.TechDocMapper">
+
+        <resultMap id="TechDocPageVoResult" type="com.figure.op.system.domain.vo.TechDocPageVo">
+        </resultMap>
+
+        <select id="selectVoPage" resultMap="TechDocPageVoResult">
+                select *
+                from tech_doc t
+                <where>
+                        <if test="queryBo.docName != null"> and t.docName like concat('%', #{queryBo.docName}, '%')  </if>
+                        <if test="queryBo.docType != null"> and t.docType  = #{queryBo.docType} </if>
+                        and d.isDelete = 0
+                </where>
+                order by t.docId desc
+        </select>
+
+</mapper>

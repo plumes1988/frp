@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.RepairEventInfoMapper">
+
+    <resultMap id="RepairEventInfoPageVoResult" type="com.figure.op.duty.domain.vo.RepairEventInfoPageVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="RepairEventInfoPageVoResult">
+        select d.*, rt.taskName, di.deviceName, fs.frontName
+        from repair_event_info d
+        left join repair_task_info rt on d.repairTaskId = rt.repairTaskId
+        left join device_info di on d.deviceId = di.deviceId
+        left join front_station_info fs on d.stationId = fs.frontId
+        <where>
+            <if test="queryBo.repairTaskId != null"> and d.repairTaskId = #{queryBo.repairTaskId} </if>
+            <if test="queryBo.taskName != null and queryBo.taskName != ''"> and rt.taskName like concat('%', #{queryBo.taskName},'%') </if>
+            <if test="queryBo.stationId != null"> and d.stationId = #{queryBo.stationId} </if>
+            <if test="queryBo.workerId != null"> and d.workerId = #{queryBo.workerId} </if>
+            <if test="queryBo.actStatus != null and queryBo.actStatus != ''"> and d.actStatus = #{queryBo.actStatus} </if>
+            <if test="queryBo.repairAct != null and queryBo.repairAct != ''"> and d.repairAct = #{queryBo.repairAct} </if>
+            <if test="queryBo.deviceId != null"> and d.deviceId = #{queryBo.deviceId} </if>
+            <if test="queryBo.startTime != null and queryBo.endTime != null"> and d.startTime between  #{queryBo.startTime} and #{queryBo.endTime} </if>
+            <if test="queryBo.eventDate != null"> and d.eventDate = #{queryBo.eventDate} </if>
+            <if test="queryBo.keyword != null and queryBo.keyword !=''"> and (rt.taskName like concat('%', #{queryBo.keyword},'%') or d.repairAct like concat('%', #{queryBo.keyword},'%')) </if>
+            <if test="queryBo.executeUpdateDate != null"> and (d.executeUpdateTime <![CDATA[ >= ]]> #{queryBo.executeUpdateDate} and d.executeUpdateTime <![CDATA[ < ]]> DATE_ADD(#{queryBo.executeUpdateDate},  INTERVAL 1 DAY))</if>
+            and d.isDelete = 0
+        </where>
+        order by d.repairEventId desc
+    </select>
+
+    <resultMap id="RepairEventInfoListVoResult" type="com.figure.op.duty.domain.vo.RepairEventInfoListVo">
+    </resultMap>
+
+    <select id="selectVoList" resultMap="RepairEventInfoListVoResult">
+        select *, rt.taskName, di.deviceName, fs.frontName
+        from repair_event_info d left join repair_task_info rt on d.repairTaskId = rt.repairTaskId
+        left join device_info di on d.deviceId = di.deviceId
+        left join front_station_info fs on d.stationId = fs.frontId
+        <where>
+            <if test="queryBo.repairTaskId != null"> and d.repairTaskId = #{queryBo.repairTaskId} </if>
+            <if test="queryBo.taskName != null"> and rt.taskName like concat('%', #{queryBo.taskName},'%') </if>
+            <if test="queryBo.stationId != null"> and d.stationId = #{queryBo.stationId} </if>
+            <if test="queryBo.worker != null"> and d.worker = #{queryBo.worker} </if>
+            <if test="queryBo.actStatus != null"> and d.actStatus = #{queryBo.actStatus} </if>
+            <if test="queryBo.repairAct != null"> and d.repairAct = #{queryBo.repairAct} </if>
+            <if test="queryBo.deviceId != null"> and d.deviceId = #{queryBo.deviceId} </if>
+            <if test="queryBo.startTime != null and queryBo.endTime != null"> and d.startTime between  #{queryBo.startTime} and #{queryBo.endTime} </if>
+            and d.isDelete = 0
+        </where>
+        order by d.repairEventId desc
+    </select>
+
+    <select id="cal" resultType="com.figure.op.duty.domain.vo.DeviceCalVo">
+        SELECT re.deviceId , d.deviceName, count(1) as num
+            FROM repair_event_info re
+            left join device_info d on re.deviceId = d.deviceId
+        <where>
+            <if test="queryBo.repairAct != null and queryBo.repairAct != ''"> and re.repairAct = #{queryBo.repairAct} </if>
+            <if test="queryBo.deviceIds != null and queryBo.deviceIds != ''">
+                and re.deviceId in
+                 <foreach item="deviceId" collection="queryBo.deviceIdList" open="(" separator="," close=")">
+                 #{deviceId}
+                 </foreach>
+            </if>
+            <if test="queryBo.stationId != null"> and re.stationId = #{queryBo.stationId} </if>
+            <if test="queryBo.startDay != null and queryBo.endDay != null"> and re.eventDate between #{queryBo.startDay} and #{queryBo.endDay} </if>
+        </where>
+        GROUP BY re.deviceId
+        order by num desc, re.deviceId desc
+    </select>
+
+</mapper>

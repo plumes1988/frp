@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.record.RecordTimingRuleMapper">
+
+    <resultMap id="RecordTimingRuleResult" type="com.figure.core.model.record.RecordTimingRule">
+        <result property="ruleId" column="ruleId"/>
+        <result property="recordTaskId" column="recordTaskId"/>
+        <result property="serno" column="serno"/>
+        <result property="isFullDay" column="isFullDay"/>
+        <result property="startTime" column="startTime"/>
+        <result property="endTime" column="endTime"/>
+        <result property="regularMode" column="regularMode"/>
+        <result property="dayOfWeek" column="dayOfWeek"/>
+        <result property="workRepeatMode" column="workRepeatMode"/>
+        <result property="startDate" column="startDate"/>
+        <result property="endDate" column="endDate"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <sql id="selectRecordTimingRuleVO">
+        select ruleId,
+               recordTaskId,
+               serno,
+               isFullDay,
+               startTime,
+               endTime,
+               regularMode,
+               dayOfWeek,
+               workRepeatMode,
+               startDate,
+               endDate,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime
+        from record_timing_rule
+    </sql>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.DutyScheduleTaskMapper">
+
+    <resultMap id="DutyScheduleTaskListVoResult" type="com.figure.op.duty.domain.vo.DutyScheduleTaskListVo">
+    </resultMap>
+
+    <select id="selectVoList" resultMap="DutyScheduleTaskListVoResult">
+        select t.*, s.scheduleName, s.scheduleAttr, s.stationId, fsi.frontName as stationName, s.startTime, s.endTime
+        from duty_schedule_task t
+        left join duty_schedule_info s on t.scheduleId = s.scheduleId
+        left join front_station_info fsi on s.stationId = fsi.frontId
+        <where>
+            <if test="queryBo.stationId != null"> and s.stationId = #{queryBo.stationId} </if>
+            <if test="queryBo.scheduleName != null and queryBo.scheduleName != ''"> and s.scheduleName like CONCAT('%', #{queryBo.scheduleName}, '%')</if>
+            <if test="queryBo.startDay != null and queryBo.endDay != null">
+                and t.scheduleDate between #{queryBo.startDay} and #{queryBo.endDay}
+            </if>
+            and t.isDelete = 0
+        </where>
+        order by t.scheduleDate asc, t.scheduleId asc
+    </select>
+
+
+</mapper>

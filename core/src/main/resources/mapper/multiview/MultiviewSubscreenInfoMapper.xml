@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.multiview.MultiviewSubscreenInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.multiview.MultiviewSubscreenInfo">
+            <id column="subScreenId" property="subScreenId" />
+            <result column="subScreenName" property="subScreenName" />
+            <result column="layoutId" property="layoutId" />
+            <result column="resolution" property="resolution" />
+            <result column="positionXY" property="positionXY" />
+            <result column="subScreenType" property="subScreenType" />
+            <result column="cpSubScreenId" property="cpSubScreenId" />
+            <result column="videoType" property="videoType" />
+            <result column="compareArea" property="compareArea" />
+            <result column="inputIP" property="inputIP" />
+            <result column="charColor" property="charColor" />
+            <result column="charBackColor" property="charBackColor" />
+            <result column="pollingTime" property="pollingTime" />
+            <result column="imageURL" property="imageURL" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            subScreenId, subScreenName, layoutId, resolution, positionXY, subScreenType, cpSubScreenId, videoType, compareArea, inputIP, charColor, charBackColor, pollingTime, imageURL, alertStaticFrame, digitalClock, autoSize, fullScreen, playSound, compareGraph, SendEval, alarmSwitch, hdSdMonitor, abnormalMonitor, alarmMonitor, blackEdgeMonitor, enableColorbar, OnlyShow, stereoEnable, nameNotShow, Opticalflow, monitorAlarmShow, loudLevelFlag, videoIndex, 4KQA, videoIndexShow, EnableAmCurbMonitor, EnableInterlaced, useGPU
+        </sql>
+
+</mapper>

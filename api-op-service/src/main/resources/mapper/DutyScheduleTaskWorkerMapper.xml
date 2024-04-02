@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.DutyScheduleTaskWorkerMapper">
+
+    <resultMap id="DutyScheduleTaskWorkerListVoResult" type="com.figure.op.duty.domain.vo.DutyScheduleTaskWorkerListVo">
+    </resultMap>
+
+    <select id="selectVoList" resultMap="DutyScheduleTaskWorkerListVoResult">
+        select w.id, w.scheduleId, w.scheduleTaskId, w.workerId, u.userName as workerName
+        from duty_schedule_task_worker w
+        left join sys_user_info u on w.workerId = u.userId
+        <where>
+          and w.isDelete = 0
+        <if test="scheduleTaskId != null">
+            and scheduleTaskId = #{scheduleTaskId}
+        </if>
+        <if test="scheduleTaskIds != null and scheduleTaskIds != ''">
+            and scheduleTaskId in
+            <foreach collection="scheduleTaskIds.split(',')" item="scheduleTaskId" open="(" separator="," close=")">
+                #{scheduleTaskId}
+            </foreach>
+        </if>
+        </where>
+    </select>
+
+</mapper>

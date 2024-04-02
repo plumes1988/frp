@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalAlarmtypeInfoMapper">
+
+    <resultMap id="SignalAlarmtypeInfoResult" type="com.figure.core.model.signal.SignalAlarmtypeInfo">
+        <result property="id" column="id"/>
+        <result property="alarmName" column="alarmName"/>
+        <result property="number" column="number"/>
+        <result property="judgementType" column="judgementType"/>
+        <result property="thresholdValue" column="thresholdValue"/>
+        <result property="thresholdOffset" column="thresholdOffset"/>
+        <result property="videoDegradation" column="videoDegradation"/>
+        <result property="alarmType" column="alarmType"/>
+        <result property="judgement" column="judgement"/>
+        <result property="switchCondition" column="switchCondition"/>
+        <result property="alarmLevel" column="alarmLevel"/>
+        <result property="eventType" column="eventType"/>
+        <result property="analysisDelay" column="analysisDelay"/>
+        <result property="alarmDelay" column="alarmDelay"/>
+        <result property="recoveryDelay" column="recoveryDelay"/>
+        <result property="timeoutThreshold" column="timeoutThreshold"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSignalAlarmtypeInfoVO">
+        select id,
+               alarmName,
+               number,
+               judgementType,
+               thresholdValue,
+               thresholdOffset,
+               videoDegradation,
+               alarmType,
+               judgement,
+               switchCondition,
+               alarmLevel,
+               eventType,
+               analysisDelay,
+               alarmDelay,
+               recoveryDelay,
+               timeoutThreshold,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from signal_alarmtype_info
+    </sql>
+
+</mapper>

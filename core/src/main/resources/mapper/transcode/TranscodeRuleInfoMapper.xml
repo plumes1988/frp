@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.transcode.TranscodeRuleInfoMapper">
+
+    <resultMap id="TranscodeRuleInfoResult" type="com.figure.core.model.transcode.TranscodeRuleInfo">
+        <result property="ruleId" column="ruleId"/>
+        <result property="ruleName" column="ruleName"/>
+        <result property="mediaType" column="mediaType"/>
+        <result property="workMode" column="workMode"/>
+        <result property="videoCode" column="videoCode"/>
+        <result property="videoHeight" column="videoHeight"/>
+        <result property="videoWidth" column="videoWidth"/>
+        <result property="frameRate" column="frameRate"/>
+        <result property="videoCodeRate" column="videoCodeRate"/>
+        <result property="audioCode" column="audioCode"/>
+        <result property="samplingRate" column="samplingRate"/>
+        <result property="audioCodeRate" column="audioCodeRate"/>
+        <result property="codingMode" column="codingMode"/>
+        <result property="showRTMP" column="showRTMP"/>
+        <result property="showUDP" column="showUDP"/>
+        <result property="showHTTP_TS" column="showHTTP_TS"/>
+        <result property="showHLS" column="showHLS"/>
+        <result property="isOSD" column="isOSD"/>
+        <result property="textXPosition" column="textXPosition"/>
+        <result property="textYPosition" column="textYPosition"/>
+        <result property="textFontSize" column="textFontSize"/>
+        <result property="timeXPosition" column="timeXPosition"/>
+        <result property="timeYPosition" column="timeYPosition"/>
+        <result property="timeFontSize" column="timeFontSize"/>
+        <result property="showTimeInfo" column="showTimeInfo"/>
+        <result property="showFrontName" column="showFrontName"/>
+        <result property="showMonitorPoint" column="showMonitorPoint"/>
+        <result property="showSignal" column="showSignal"/>
+        <result property="showChannelName" column="showChannelName"/>
+        <result property="isDefault" column="isDefault"/>
+        <result property="syncStatus" column="syncStatus"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectTranscodeRuleInfoVO">
+        select ruleId,
+               ruleName,
+               mediaType,
+               workMode,
+               videoCode,
+               videoHeight,
+               videoWidth,
+               frameRate,
+               videoCodeRate,
+               audioCode,
+               samplingRate,
+               audioCodeRate,
+               codingMode,
+               showRTMP,
+               showUDP,
+               showHTTP_TS,
+               showHLS,
+               isOSD,
+               textXPosition,
+               textYPosition,
+               textFontSize,
+               timeXPosition,
+               timeYPosition,
+               timeFontSize,
+               showTimeInfo,
+               showFrontName,
+               showMonitorPoint,
+               showSignal,
+               showChannelName,
+               isDefault,
+               syncStatus,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from transcode_rule_info
+    </sql>
+
+</mapper>

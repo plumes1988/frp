@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.cameramanager.mapper.CameraInfoMapper">
+
+        <resultMap id="CameraInfoVo" type="com.figure.op.cameramanager.domain.vo.CameraInfoVo">
+        </resultMap>
+
+        <select id="queryList" resultMap="CameraInfoVo">
+                SELECT c.cameraId, c.cameraCode,c.cameraName,t.cameraTypeName,c.cameraTypeCode,c.ip,c.port,c.channelNo,c.username,
+                c.password, c.deviceCode,m.deviceId,m.deviceName,c.locateId,d.locateName,c.remark
+                FROM camera_info c  JOIN monitor_device_info m ON c.deviceCode = m.deviceCode
+                JOIN device_locate d ON c.locateId = d.locateId
+                JOIN camera_type_info t on c.cameraTypeCode = t.cameraTypeCode
+                <where>
+                        c.isDelete=0 and m.isDelete=0 and t.isDelete=0
+                        <if test="cameraName != null"> and c.cameraName like concat('%', #{cameraName},'%') </if>
+                </where>
+        </select>
+
+</mapper>

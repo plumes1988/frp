@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicGroupMpRelMapper">
+
+    <resultMap id="LogicGroupMpRelResult" type="com.figure.core.model.logic.LogicGroupMpRel">
+        <result property="id" column="id"/>
+        <result property="analysisModelId" column="analysisModelId"/>
+        <result property="monitorpointId" column="monitorpointId"/>
+        <result property="chainGrade" column="chainGrade"/>
+        <result property="auxiliary" column="auxiliary"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicGroupMpRelVO">
+        select id,
+               analysisModelId,
+               monitorpointId,
+               chainGrade,
+               auxiliary,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_group_mp_rel
+    </sql>
+
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress SqlResolve -->
+<mapper namespace="com.figure.core.repository.table.OperateTableMapper">
+
+    <resultMap id="RecordServiceInfoResult" type="com.figure.core.model.record.CreateRecordFile">
+        <result property="tableName" column="tableName"/>
+        <result property="createTable" column="createTable"/>
+    </resultMap>
+
+    <update id="createRecordFileTable" parameterType="com.figure.core.model.record.CreateRecordFile"><![CDATA[
+        create table ${tableName}
+        (
+            `fileId`          int(11) NOT NULL AUTO_INCREMENT COMMENT '文件Id,自增',
+            `serviceCode`     varchar(255) DEFAULT NULL COMMENT '收录服务编号',
+            `serviceIP`       varchar(255) DEFAULT NULL COMMENT '收录服务IP',
+            `mediaType`       tinyint(2)   DEFAULT NULL COMMENT '收录类型 0音频 1视频 2码流',
+            `signalId`        char(32)     DEFAULT NULL COMMENT '频道Id或者频率Id',
+            `transcodeRuleId` int(11)      DEFAULT NULL COMMENT '转码规则Id，源码录制或者码流录制时为0',
+            `filePath`        varchar(510) DEFAULT NULL COMMENT '文件路径',
+            `fileUrl`        varchar(510) DEFAULT NULL COMMENT '文件url 录制服务器提供nginx下载服务地址',
+            `startTime`       datetime     DEFAULT NULL COMMENT '文件开始时间',
+            `endTime`         datetime     DEFAULT NULL COMMENT '文件结束时间',
+            `fileTime`        int(11)      DEFAULT NULL COMMENT '文件时长',
+            `alarmRecord`     tinyint(2)   DEFAULT NULL COMMENT '报警触发标识 0未关联报警 1已关联报警',
+            `isHLS`           tinyint(2)   DEFAULT NULL COMMENT '是否HLS 0不是HLS 1是HLS',
+            `saveFlag`        tinyint(2)   DEFAULT NULL COMMENT '另存标识 每被另存为一次，标识+1，删除另存对象标识-1',
+            `saveTime`        int(11)      DEFAULT NULL COMMENT '保存时长，单位 天',
+            `createUserId`    int(11)      DEFAULT NULL COMMENT '创建人员ID',
+            `createTime`      datetime     DEFAULT NULL COMMENT '创建时间',
+            `updateUserId`    int(11)      DEFAULT NULL COMMENT '更新人员ID',
+            `updateTime`      datetime     DEFAULT NULL COMMENT '更新时间',
+            `isDelete`        int(11)      DEFAULT '0' COMMENT '状态：0:未删除、1:已删除、2:停用',
+            PRIMARY KEY (`fileId`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8;
+        ]]></update>
+
+    <select id="countRecordFileTable" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(*)
+        FROM information_schema.TABLES
+        WHERE TABLE_SCHEMA = '${dataBaseName}'
+          AND TABLE_NAME = '${tableName}'
+    </select>
+    <select id="selectByTableName" resultType="com.figure.core.model.record.RecordFile">
+        select fileId,
+        serviceCode,
+        serviceIP,
+        mediaType,
+        signalId,
+        transcodeRuleId,
+        filePath,
+        fileUrl,
+        startTime,
+        endTime,
+        fileTime,
+        alarmRecord,
+        isHLS,
+        saveFlag,
+        saveTime,
+        createUserId,
+        createTime,
+        updateUserId,
+        updateTime,
+        isDelete
+        from ${tableName}
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        order by startTime
+    </select>
+    <select id="countRecordFileNameWithServiceCode" resultType="java.lang.Integer">
+        select count(*) from record_file_servicecode t where t.recordFileTableName = #{tableName} and t.serviceCode = #{serviceCode}
+    </select>
+
+    <insert id="saveByTableName" parameterType="com.figure.core.model.record.RecordFile">
+        insert into ${tableName} (serviceCode,
+                                  serviceIP,
+                                  mediaType,
+                                  signalId,
+                                  transcodeRuleId,
+                                  filePath,
+                                  fileUrl,
+                                  startTime,
+                                  endTime,
+                                  fileTime,
+                                  alarmRecord,
+                                  isHLS,
+                                  saveFlag,
+                                  saveTime,
+                                  createUserId,
+                                  createTime,
+                                  updateUserId,
+                                  updateTime) value ( #{recordFile.serviceCode},
+            #{recordFile.serviceIP},
+            #{recordFile.mediaType},
+            #{recordFile.signalId},
+            #{recordFile.transcodeRuleId},
+            #{recordFile.filePath},
+            #{recordFile.fileUrl},
+            #{recordFile.startTime},
+            #{recordFile.endTime},
+            #{recordFile.fileTime},
+            #{recordFile.alarmRecord},
+            #{recordFile.isHLS},
+            #{recordFile.saveFlag},
+            #{recordFile.saveTime},
+            #{recordFile.createUserId},
+            #{recordFile.createTime},
+            #{recordFile.updateUserId},
+            #{recordFile.updateTime})
+    </insert>
+
+
+    <insert id="insertRecordFileNameWithServiceCode" parameterType="java.lang.String">
+        insert into record_file_servicecode(recordFileTableName,serviceCode)value(#{tableName},#{serviceCode});
+    </insert>
+</mapper>

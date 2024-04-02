@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.record.RecordServiceInfoMapper">
+
+    <resultMap id="RecordServiceInfoResult" type="com.figure.core.model.record.RecordServiceInfo">
+        <result property="recordServiceId" column="recordServiceId"/>
+        <result property="recordServiceName" column="recordServiceName"/>
+        <result property="frontId" column="frontId"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="totalBitRate" column="totalBitRate"/>
+        <result property="usedBitRate" column="usedBitRate"/>
+        <result property="recordServiceIP" column="recordServiceIP"/>
+        <result property="hlsFileTime" column="hlsFileTime"/>
+        <result property="fileTime" column="fileTime"/>
+        <result property="recordPath" column="recordPath"/>
+        <result property="urlContext" column="urlContext"/>
+        <result property="diskSpaceQuota" column="diskSpaceQuota"/>
+        <result property="taskStatus" column="taskStatus"/>
+        <result property="errorInfo" column="errorInfo"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectRecordServiceInfoVO">
+        select recordServiceId,
+               recordServiceName,
+               frontId,
+               serviceCode,
+               serviceName,
+               recordServiceIP,
+               hlsFileTime,
+               fileTime,
+               totalBitRate,
+               usedBitRate,
+               recordPath,
+               urlContext,
+               diskSpaceQuota,
+               taskStatus,
+               errorInfo,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from record_service_info
+    </sql>
+    <select id="selectRecordServiceInfoByClusterId"
+            resultType="com.figure.core.model.record.RecordServiceInfoList">
+        select t.recordServiceId,
+        t.recordServiceName,
+        t.frontId,
+        t.serviceCode,
+        t.serviceName,
+        t.recordServiceIP,
+        t.totalBitRate,
+        t.usedBitRate,
+        t.hlsFileTime,
+        t.fileTime,
+        t.recordPath,
+        t.urlContext,
+        t.diskSpaceQuota,
+        t.taskStatus,
+        t.errorInfo,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        rci.recordClusterId as parentId,
+        rci.recordClusterId as reocrdClusterId,
+        rci.recordClusterName as recordClusterName,
+        fsi.frontName as frontName,
+        di.deviceName as deviceName
+        from record_service_info t
+        left join record_service_cluster_rel rscl on rscl.recordServiceId = t.recordServiceId
+        left join record_cluster_info rci on rci.recordClusterId = rscl.recordClusterId
+        left join front_station_info fsi on fsi.frontId = t.frontId
+        left join device_info di on di.deviceCode = t.serviceCode
+        WHERE rci.isDelete = 0
+        AND t.isDelete = 0
+        <if test="recordClusterId != null">
+            and rci.recordClusterId = #{recordClusterId}
+        </if>
+    </select>
+
+</mapper>

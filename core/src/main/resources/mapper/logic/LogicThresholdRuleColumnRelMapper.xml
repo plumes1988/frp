@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicThresholdRuleColumnRelMapper">
+
+    <resultMap id="LogicThresholdRuleColumnRelResult" type="com.figure.core.model.logic.LogicThresholdRuleColumnRel">
+        <result property="id" column="id"/>
+        <result property="logicChannelId" column="logicChannelId"/>
+        <result property="modelId" column="modelId"/>
+    </resultMap>
+
+    <sql id="selectLogicThresholdRuleColumnRelVO">
+        select id, logicChannelId, modelId
+        from logic_threshold_rule_column_rel
+    </sql>
+
+</mapper>

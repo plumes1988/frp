@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicCompareModelMapper">
+
+    <resultMap id="LogicCompareModelResult" type="com.figure.core.model.logic.LogicCompareModel">
+        <result property="id" column="id"/>
+        <result property="groupModelId" column="groupModelId"/>
+        <result property="mainPositionId" column="mainPositionId"/>
+        <result property="comparePositionId" column="comparePositionId"/>
+        <result property="relSwitcher" column="relSwitcher"/>
+        <result property="relSwitcherNumber" column="relSwitcherNumber"/>
+        <result property="relInterfaceId" column="relInterfaceId"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicCompareModelVO">
+        select id,
+               groupModelId,
+               mainPositionId,
+               comparePositionId,
+               relSwitcher,
+               relSwitcherNumber,
+               relInterfaceId,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_compare_model
+    </sql>
+
+</mapper>

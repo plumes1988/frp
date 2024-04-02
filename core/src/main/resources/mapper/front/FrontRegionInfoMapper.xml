@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.front.FrontRegionInfoMapper">
+    
+    <resultMap type="com.figure.core.model.front.FrontRegionInfo" id="FrontRegionInfoResult">
+        <result property="regionId" column="regionId"/>
+        <result property="regionName" column="regionName"/>
+        <result property="regoinalLevel" column="regoinalLevel"/>
+        <result property="regionCode" column="regionCode"/>
+        <result property="supRegionId" column="supRegionId"/>
+        <result property="districtsId" column="districtsId"/>
+        <result property="cityId" column="cityId"/>
+        <result property="provincesId" column="provincesId"/>
+        <result property="regionLevel" column="regionLevel"/>
+        <result property="regionLat" column="regionLat"/>
+        <result property="regionLong" column="regionLong"/>
+        <result property="leftLongitude" column="leftLongitude"/>
+        <result property="topLatitude" column="topLatitude"/>
+        <result property="rightLongitude" column="rightLongitude"/>
+        <result property="bottomLatitude" column="bottomLatitude"/>
+        <result property="fileName" column="fileName"/>
+        <result property="flagOfMap" column="flagOfMap"/>
+    </resultMap>
+
+    <sql id="selectFrontRegionInfoVO">
+        select regionId, regionName, regoinalLevel, regionCode, supRegionId, districtsId, cityId, provincesId, regionLevel, regionLat, regionLong, leftLongitude, topLatitude, rightLongitude, bottomLatitude, fileName, flagOfMap from front_region_info
+    </sql>
+
+</mapper>

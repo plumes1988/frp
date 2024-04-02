@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.audit.AuditBoardcastDeviceInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.audit.AuditBoardcastDeviceInfo">
+                    <id column="devId" property="devId" />
+                    <result column="devName" property="devName" />
+                    <result column="devTypeCode" property="devTypeCode" />
+                    <result column="devTypeName" property="devTypeName" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            devId, devName, devTypeCode, devTypeName
+        </sql>
+
+</mapper>

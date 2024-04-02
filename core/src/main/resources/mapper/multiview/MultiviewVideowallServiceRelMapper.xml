@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.multiview.MultiviewVideowallServiceRelMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.multiview.MultiviewVideowallServiceRel">
+                    <id column="videoWallId" property="videoWallId" />
+                    <result column="multiviewServiceId" property="multiviewServiceId" />
+                    <result column="screenId" property="screenId" />
+                    <result column="xPos" property="xPos" />
+                    <result column="yPos" property="yPos" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            videoWallId, multiviewServiceId, screenId, xPos, yPos
+        </sql>
+
+</mapper>

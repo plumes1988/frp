@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.audit.AuditProgramScheduleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.figure.core.model.audit.AuditProgramSchedule">
+        <id column="scheduleId" property="scheduleId" />
+        <id column="scheduleVersion" property="scheduleVersion" />
+        <result column="id" property="id" />
+        <result column="scheduleType" property="scheduleType" />
+        <result column="channelCode" property="channelCode" />
+        <result column="itemID" property="itemID" />
+        <result column="itemIndex" property="itemIndex" />
+        <result column="playTime" property="playTime" />
+        <result column="playDuration" property="playDuration" />
+        <result column="clipId" property="clipId" />
+        <result column="trimIn" property="trimIn" />
+        <result column="columnCode" property="columnCode" />
+        <result column="columnName" property="columnName" />
+        <result column="programCode" property="programCode" />
+        <result column="programName" property="programName" />
+        <result column="video" property="video" />
+        <result column="AFD" property="AFD" />
+        <result column="audio" property="audio" />
+        <result column="throughType" property="throughType" />
+        <result column="newsFlag" property="newsFlag" />
+        <result column="isAD" property="isAD" />
+        <result column="isLive" property="isLive" />
+        <result column="playItemReadyStatus" property="playItemReadyStatus" />
+        <result column="devIDM" property="devIDM" />
+        <result column="devIDB" property="devIDB" />
+        <result column="isChannelBranding" property="isChannelBranding" />
+        <result column="channelPackingItemCode" property="channelPackingItemCode" />
+        <result column="broadcastListItemID" property="broadcastListItemID" />
+        <result column="playDate" property="playDate" />
+        <result column="playEndTime" property="playEndTime" />
+        <result column="playEvent" property="playEvent" />
+        <result column="refUBroadcastItemId" property="refUBroadcastItemId" />
+        <result column="devTypeCode" property="devTypeCode" />
+        <result column="liveLockStatus" property="liveLockStatus" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        t.id, scheduleId, scheduleVersion, scheduleType, t.channelCode, itemID, itemIndex, playTime, playDuration, t.clipId, t.trimIn, columnCode, columnName, programCode, programName, t.video, t.AFD, t.audio, throughType, newsFlag, isAD, isLive, playItemReadyStatus, devIDM, devIDB, isChannelBranding, channelPackingItemCode,broadcastListItemID, playDate, playEndTime, playEvent, refUBroadcastItemId, devTypeCode, liveLockStatus
+    </sql>
+
+    <select id="selectPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,slc.channelName,aclpi.clipName
+        from audit_program_schedule t left join signal_logic_channel slc on slc.channelCode = t.channelCode left join audit_clip_info aclpi on aclpi.clipId=t.clipId
+        <where >
+            <if test="conditions.scheduleVersion != null">
+                t.scheduleVersion = #{conditions.scheduleVersion}
+            </if>
+            <if test="conditions.channelCode != null">
+                AND  slc.channelCode = #{conditions.channelCode}
+            </if>
+            <if test="conditions.clipId != null">
+                AND  aclpi.clipId = #{conditions.clipId}
+            </if>
+            <if test="conditions.begin_playTime != null">
+                AND  t.playTime &gt;= #{conditions.begin_playTime}
+            </if>
+            <if test="conditions.end_playTime != null">
+                AND  #{conditions.end_playTime} &gt;= t.playTime
+            </if>
+            <if test="conditions.video != null">
+                AND  #{conditions.video} = t.video
+            </if>
+            <if test="conditions.audio != null">
+                AND  #{conditions.audio} = t.audio
+            </if>
+            <if test="conditions.devTypeCode != null">
+                AND  #{conditions.devTypeCode} = t.devTypeCode
+            </if>
+            <if test="conditions.playTime != null">
+                AND    t.playTime &gt;= #{conditions.playTime}
+            </if>
+            <if test="conditions.playEndTime != null">
+                AND   t.playEndTime &lt;=  #{conditions.playEndTime}
+            </if>
+            <if test="conditions.programName != null">
+                AND   t.programName =  #{conditions.programName}
+            </if>
+            <if test="conditions.broadcastListItemID != null">
+                AND   t.broadcastListItemID =  #{conditions.broadcastListItemID}
+            </if>
+            <if test="conditions.columnName != null">
+                AND   t.columnName =  #{conditions.columnName}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

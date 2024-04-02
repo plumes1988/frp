@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicGroupDeviceRelMapper">
+
+    <resultMap id="LogicGroupDeviceRelResult" type="com.figure.core.model.logic.LogicGroupDeviceRel">
+        <result property="id" column="id"/>
+        <result property="channelCode" column="channelCode"/>
+        <result property="deviceCode" column="deviceCode"/>
+        <result property="groupId" column="groupId"/>
+        <result property="linkMode" column="linkMode"/>
+        <result property="channelIds" column="channelIds"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicGroupDeviceRelVO">
+        select id,
+               channelCode,
+               deviceCode,
+               groupId,
+               linkMode,
+               channelIds,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_group_device_rel
+    </sql>
+    <select id="treelist" resultType="com.figure.core.model.logic.LogicGroupDeviceRelList">
+        select t.id,
+        t.channelCode,
+        t.deviceCode,
+        t.groupId,
+        t.linkMode,
+        t.channelIds,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        di.logicPositionId as logicPositionId,
+        di.deviceName as deviceName,
+        sdd.paraName as linkTypeName,
+        flp.linkType as linkType,
+        flp.positionName as positionName,
+        dy1.typeName as deviceTypeName,
+        dy1.typeId as deviceType,
+        dy2.typeName as deviceSubTypeName,
+        dy2.typeId as deviceSubType
+        from logic_group_device_rel t
+        left join device_info di on di.deviceCode = t.deviceCode
+        left join device_type dy1 on dy1.typeCode = '300000' and dy1.leve = 1
+        left join device_type dy2 on dy2.parentTypeCode = '300000' and dy2.typeCode = '300102' and dy2.leve = 2
+        left join front_logic_position flp on flp.positionId = di.logicPositionId
+        left join sys_data_dictionary sdd on sdd.paraType = 'linkLevel' and sdd.paraValue = flp.linkType
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.front.FrontStationInfoMapper">
+    
+    <resultMap type="com.figure.core.model.front.FrontStationInfo" id="FrontStationInfoResult">
+        <result property="frontId" column="frontId"/>
+        <result property="frontName" column="frontName"/>
+        <result property="supFrontId" column="supFrontId"/>
+        <result property="workMode" column="workMode"/>
+        <result property="frontType" column="frontType"/>
+        <result property="regionId" column="regionId"/>
+        <result property="regionalLevel" column="regionalLevel"/>
+        <result property="frontLat" column="frontLat"/>
+        <result property="frontLong" column="frontLong"/>
+        <result property="frontCode" column="frontCode"/>
+        <result property="frontLocation" column="frontLocation"/>
+        <result property="frontIP" column="frontIP"/>
+        <result property="loginName" column="loginName"/>
+        <result property="loginPass" column="loginPass"/>
+        <result property="bandWidth" column="bandWidth"/>
+        <result property="mediaImgPath" column="mediaImgPath"/>
+        <result property="signalCodes" column="signalCodes"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isEnable" column="isEnable"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectFrontStationInfoVO">
+        select frontId, frontName, supFrontId, workMode, frontType, regionId, regionalLevel, frontLat, frontLong, frontCode, frontLocation, frontIP, loginName, loginPass, bandWidth, mediaImgPath, signalCodes, createUserId, createTime, updateUserId, updateTime, isEnable, isDelete from front_station_info
+    </sql>
+
+</mapper>

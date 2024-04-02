@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicMonitorunitInterfaceInfoMapper">
+
+    <resultMap id="LogicMonitorunitInterfaceInfoResult"
+               type="com.figure.core.model.logic.LogicMonitorunitInterfaceInfo">
+        <result property="interfaceId" column="interfaceId"/>
+        <result property="switchCode" column="switchCode"/>
+        <result property="interfaceName" column="interfaceName"/>
+        <result property="interfaceType" column="interfaceType"/>
+        <result property="interfaceSerialNo" column="interfaceSerialNo"/>
+        <result property="interfaceRank" column="interfaceRank"/>
+        <result property="logicPosition" column="logicPosition"/>
+        <result property="autoEmergency" column="autoEmergency"/>
+        <result property="autoSwitchBack" column="autoSwitchBack"/>
+        <result property="conditionMode" column="conditionMode"/>
+        <result property="conditionGrade" column="conditionGrade"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicMonitorunitInterfaceInfoVO">
+        select interfaceId,
+               switchCode,
+               interfaceName,
+               interfaceType,
+               interfaceSerialNo,
+               interfaceRank,
+               logicPosition,
+               autoEmergency,
+               autoSwitchBack,
+               conditionMode,
+               conditionGrade,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_monitorunit_interface_info
+    </sql>
+
+</mapper>

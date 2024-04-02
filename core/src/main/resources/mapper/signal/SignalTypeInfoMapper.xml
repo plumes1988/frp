@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalTypeInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.signal.SignalTypeInfo">
+                    <id column="signalCode" property="id" />
+                    <result column="signalName" property="signalName" />
+                    <result column="signalCarrier" property="signalCarrier" />
+                    <result column="isModSignal" property="isModSignal" />
+                    <result column="maxStreamCount" property="maxStreamCount" />
+                    <result column="defaultFrequencyStart" property="defaultFrequencyStart" />
+                    <result column="defaultFrequencyEnd" property="defaultFrequencyEnd" />
+                    <result column="signalUnit" property="signalUnit" />
+                    <result column="scanStepStyle" property="scanStepStyle" />
+                    <result column="scanStep" property="scanStep" />
+                    <result column="scanStepUnit" property="scanStepUnit" />
+                    <result column="indicatorsPcrTime" property="indicatorsPcrTime" />
+                    <result column="indicatorsCmtTime" property="indicatorsCmtTime" />
+                    <result column="indicatorsTime" property="indicatorsTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            signalCode, signalName, signalCarrier, isModSignal, maxStreamCount, defaultFrequencyStart, defaultFrequencyEnd, signalUnit, scanStepStyle, scanStep, scanStepUnit, indicatorsPcrTime, indicatorsCmtTime, indicatorsTime
+        </sql>
+
+</mapper>

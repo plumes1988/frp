@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceAssetMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceAsset">
+            <id column="assetNo" property="assetNo" />
+            <result column="serialNo" property="serialNo" />
+            <result column="deviceType" property="deviceType" />
+            <result column="deviceSubType" property="deviceSubType" />
+            <result column="productId" property="productId" />
+            <result column="modelId" property="modelId" />
+            <result column="buyDate" property="buyDate" />
+            <result column="useDate" property="useDate" />
+            <result column="lastMaintainTime" property="lastMaintainTime" />
+            <result column="status" property="status" />
+            <result column="imgURL" property="imgURL" />
+            <result column="ratedPower" property="ratedPower" />
+            <result column="weight" property="weight" />
+            <result column="threeDModelId" property="threeDModelId" />
+            <result column="remark" property="remark" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            assetNo, serialNo, deviceType, deviceSubType,productId, modelId,  buyDate, useDate, lastMaintainTime, status, imgURL, ratedPower, weight, threeDModelId, remark
+        </sql>
+
+</mapper>

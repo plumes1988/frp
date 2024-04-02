@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceIndicatorParamRelTempleteMapper">
+
+<!-- 通用查询映射结果 -->
+<resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceIndicatorParamRelTemplete">
+    <result column="id" property="id" />
+    <result column="deviceTypeCode" property="deviceTypeCode" />
+    <result column="deviceSubTypeCode" property="deviceSubTypeCode" />
+    <result column="productId" property="productId" />
+    <result column="modelId" property="modelId" />
+    <result column="indicatorCode" property="indicatorCode" />
+    <result column="indicatorValue" property="indicatorValue" />
+    <result column="alarmStatus" property="alarmStatus" />
+    <result column="enableMonitor" property="enableMonitor" />
+    <result column="monitorInterval" property="monitorInterval" />
+    <result column="enableAlarm" property="enableAlarm" />
+    <result column="indicatorRuleIds" property="indicatorRuleIds" />
+    <result column="communicateMode" property="communicateMode" />
+    <result column="responseParams" property="responseParams" />
+    <result column="responseParseScript" property="responseParseScript" />
+    <result column="enableSetting" property="enableSetting" />
+    <result column="requestParams" property="requestParams" />
+    <result column="requestParseScript" property="requestParseScript" />
+    <result column="checkMode" property="checkMode" />
+    <result column="recordMode" property="recordMode" />
+    <result column="changeThreshold" property="changeThreshold" />
+    <result column="retentionTime" property="retentionTime" />
+    <result column="requestClass" property="requestClass" />
+    <result column="responseClass" property="responseClass" />
+    <result column="updateTime" property="updateTime" />
+    <result column="collectTime" property="collectTime" />
+</resultMap>
+
+<!-- 通用查询结果列 -->
+<sql id="Base_Column_List">
+    id,
+            deviceTypeCode, deviceSubTypeCode, productId, modelId, indicatorCode, indicatorValue, alarmStatus, enableMonitor, monitorInterval, enableAlarm, indicatorRuleIds, communicateMode, responseParams, responseParseScript, enableSetting, requestParams, requestParseScript, checkMode, recordMode, changeThreshold, retentionTime, requestClass, responseClass, updateTime, collectTime
+</sql>
+
+</mapper>
+

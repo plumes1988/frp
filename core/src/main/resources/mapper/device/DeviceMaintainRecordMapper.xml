@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceMaintainRecordMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceMaintainRecord">
+                <result column="id" property="id" />
+                <result column="assetNo" property="assetNo" />
+                <result column="principalId" property="principalId" />
+                <result column="maintainTime" property="maintainTime" />
+                <result column="actionCode" property="actionCode" />
+                <result column="maintainRecord" property="maintainRecord" />
+                <result column="maintainRecord" property="maintainRecord" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+                id,
+            t.assetNo, principalId, maintainTime, actionCode, maintainRecord
+        </sql>
+
+        <select id="selectPage" resultMap="BaseResultMap">
+                select
+                <include refid="Base_Column_List"/>,di.productId,di.modelId,di.deviceType,di.deviceSubType,di.deviceId,di.deviceCode
+                from device_maintain_record t
+                left join device_info di on di.assetNo=t.assetNo
+                <where>
+                        <if test="conditions.productId != null">
+                                di.productId = #{conditions.productId}
+                        </if>
+                        <if test="conditions.modelId != null">
+                                AND  di.modelId = #{conditions.modelId}
+                        </if>
+                        <if test="conditions.deviceType != null">
+                                AND  di.deviceType = #{conditions.deviceType}
+                        </if>
+                        <if test="conditions.deviceSubType != null">
+                                AND  di.deviceSubType = #{conditions.deviceSubType}
+                        </if>
+                        <if test="conditions.begin_maintainTime != null">
+                                AND  t.maintainTime >= #{conditions.begin_maintainTime}
+                        </if>
+                        <if test="conditions.end_maintainTime != null">
+                                AND  #{conditions.end_maintainTime} >= t.maintainTime
+                        </if>
+                        <if test="conditions.actionCode != null">
+                                AND  t.actionCode = #{conditions.actionCode}
+                        </if>
+                        <if test="conditions.principalId != null">
+                                AND  t.principalId = #{conditions.principalId}
+                        </if>
+                        <if test="conditions.multi_assetNo != null">
+                                AND  t.assetNo in (${conditions.multi_assetNo})
+                        </if>
+                </where>
+        </select>
+
+</mapper>

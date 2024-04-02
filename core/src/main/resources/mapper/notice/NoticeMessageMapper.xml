@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.notice.NoticeMessageMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.figure.core.model.notice.NoticeMessage">
+        <id column="messageId" property="messageId" />
+        <result column="subject" property="subject" />
+        <result column="sourceType" property="sourceType" />
+        <result column="sourceId" property="sourceId" />
+        <result column="msg" property="msg" />
+        <result column="level" property="level" />
+        <result column="readStatus" property="readStatus" />
+        <result column="receiverUserId" property="receiverUserId" />
+        <result column="status" property="status" />
+        <result column="errorCause" property="errorCause" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        messageId, subject, sourceType, sourceId, msg, level, readStatus, receiverUserId, status, errorCause
+    </sql>
+</mapper>

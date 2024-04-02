@@ -1,0 +1,91 @@
+server:
+  port: 9090
+  servlet:
+    contextPath: /api
+
+# DataSource Config
+
+spring:
+  application:
+    name: api-system-service
+  servlet:
+    multipart:
+      max-file-size: 900MB
+      max-request-size: 900MB
+  datasource:
+    dynamic:
+      primary: frp #设置默认的数据源或者数据源组,默认值即为frp
+      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源.
+      datasource:
+        frp:
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/frp_neimeng_bakup?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
+          username: root
+          password: Figure@321
+#          url: jdbc:mysql://192.168.117.55:3307/frp618?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
+#          username: figure
+#          password: Figure@123
+#       mysql:
+#          driver-class-name: com.mysql.jdbc.Driver
+#          url: jdbc:mysql://127.0.0.1:3306/mysql?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false
+#          username: root
+#          password: 111111
+
+
+rocketmq:
+  # 多个NameServer，host:port;host:port，RocketMQProperties
+
+  #  name-server: 127.0.0.1:9876;127.0.0.1:9877
+  name-server: 127.0.0.1:9876
+  producer:
+    # 发送同一类消息的设置为同一个group，保证唯一
+    group: springboot_producer_group
+    # 发送消息失败重试次数，默认2
+    retryTimesWhenSendFailed: 2
+    # 异步消息重试此处，默认2
+    retryTimesWhenSendAsyncFailed: 2
+    # 发送消息超时时间，默认3000
+    sendMessageTimeout: 3000
+    # 消息最大长度，默认1024 * 1024 * 4(默认4M)
+    maxMessageSize: 4096
+    # 压缩消息阈值，默认4k(1024 * 4)
+    compressMessageBodyThreshold: 4096
+    # 是否在内部发送失败时重试另一个broker，默认false
+    retryNextServer: false
+    # access-key
+    #accessKey: xxx
+    # secret-key
+    #secretKey: xxx
+    # 是否启用消息跟踪，默认false
+    enableMsgTrace: false
+    # 消息跟踪主题的名称值。如果不进行配置，可以使用默认的跟踪主题名称
+    customizedTraceTopic: RMQ_SYS_TRACE_TOPIC
+  consumer:
+    # 配置指定group是否启动监听器 group1.topic1 = false
+    listeners:
+      # key：group名称
+      rocketmq_source_code_group:
+        # value：{key: topic名称: value: true/false}
+        rocketmq_source_code: true
+    # 指定消费组
+    group: springboot_consumer_group
+    # 指定topic，启动时就会注册
+    #topic: springboot_consumer_xxx
+    # 一次拉取消息最大值，注意是拉取消息的最大值而非消费最大值
+    pull-batch-size: 10
+    # 其他配置参考属性类
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    map-underscore-to-camel-case: false
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+
+logging:
+  level:
+    io.netty: ERROR
+    # 关闭RocketmqClient info日志，不然每隔几秒就会打印broker信息
+    RocketmqClient: error
+
+mysql:
+  binlog: 1 # 0:关闭；1:开启

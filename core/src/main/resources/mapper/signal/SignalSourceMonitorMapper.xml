@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalSourceMonitorMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.signal.SignalSourceMonitor">
+            <result column="id" property="id" />
+            <result column="logicChannelCode" property="logicChannelCode" />
+            <result column="sourceServiceCode" property="sourceServiceCode" />
+            <result column="sourceChangeMode" property="sourceChangeMode" />
+            <result column="alarmThresholdModel" property="alarmThresholdModel" />
+            <result column="preMonitorEnable" property="preMonitorEnable" />
+            <result column="pre1stTime" property="pre1stTime" />
+            <result column="pre1stAlarmThresholdModel" property="pre1stAlarmThresholdModel" />
+            <result column="pre2stTime" property="pre2stTime" />
+            <result column="pre2stAlarmThresholdModel" property="pre2stAlarmThresholdModel" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+           id, logicChannelCode, sourceServiceCode, sourceChangeMode, alarmThresholdModel, preMonitorEnable, pre1stTime, pre1stAlarmThresholdModel, pre2stTime, pre2stAlarmThresholdModel
+        </sql>
+
+</mapper>

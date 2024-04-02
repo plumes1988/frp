@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicMonitorunitLogicchannelRelMapper">
+
+    <resultMap id="LogicMonitorunitLogicchannelRelResult"
+               type="com.figure.core.model.logic.LogicMonitorunitLogicchannelRel">
+        <result property="id" column="id"/>
+        <result property="monitorUnitId" column="monitorUnitId"/>
+        <result property="logicGroupId" column="logicGroupId"/>
+    </resultMap>
+
+    <sql id="selectLogicMonitorunitLogicchannelRelVO">
+        select id, monitorUnitId, logicGroupId
+        from logic_monitorunit_logicchannel_rel
+    </sql>
+
+</mapper>

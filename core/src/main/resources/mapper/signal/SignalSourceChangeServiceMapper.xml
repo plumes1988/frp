@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalSourceChangeServiceMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.signal.SignalSourceChangeService">
+                    <result column="id" property="id" />
+                    <result column="serviceCode" property="serviceCode" />
+                    <result column="serviceName" property="serviceName" />
+                    <result column="updateTime" property="updateTime" />
+                    <result column="deviceId" property="deviceId" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            id,serviceCode, serviceName, updateTime, deviceId
+        </sql>
+
+</mapper>

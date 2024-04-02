@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicMonitorunitInfoMapper">
+
+    <resultMap id="LogicMonitorunitInfoResult" type="com.figure.core.model.logic.LogicMonitorunitInfo">
+        <result property="unitId" column="unitId"/>
+        <result property="monitorName" column="monitorName"/>
+        <result property="monitorAlias" column="monitorAlias"/>
+        <result property="switchCode" column="switchCode"/>
+        <result property="linkSwitch" column="linkSwitch"/>
+        <result property="linkSwitchCode" column="linkSwitchCode"/>
+        <result property="unitMode" column="unitMode"/>
+        <result property="inputCount" column="inputCount"/>
+        <result property="outputCount" column="outputCount"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicMonitorunitInfoVO">
+        select unitId,
+               monitorName,
+               monitorAlias,
+               switchCode,
+               linkSwitch,
+               linkSwitchCode,
+               unitMode,
+               inputCount,
+               outputCount,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_monitorunit_info
+    </sql>
+    <select id="selectMonitorunitByMonitorChannelCode"
+            resultType="com.figure.core.model.logic.LogicMonitorunitInfo">
+        select t.unitId,
+               t.monitorName,
+               t.monitorAlias,
+               t.switchCode,
+               t.linkSwitch,
+               t.linkSwitchCode,
+               t.unitMode,
+               t.inputCount,
+               t.outputCount,
+               t.createUserId,
+               t.createTime,
+               t.updateUserId,
+               t.updateTime,
+               t.isDelete,
+               rel.id                 as ids,
+               lmi.monitorChannelCode as parentIdString
+        from logic_monitorunit_info t
+                 left join logic_monitor_channel_unit_rel rel on rel.unitId = t.unitId
+                 left join logic_monitorchannel_info lmi on lmi.monitorChannelCode = rel.monitorChannelCode
+        where t.isDelete = 0
+          and lmi.isDelete = 0
+          and lmi.monitorChannelCode = #{monitorChannelCode}
+    </select>
+    <select id="relList" parameterType="com.figure.core.query.logic.LogicMonitorunitInfoQuery"
+            resultType="com.figure.core.model.logic.LogicMonitorunitInfoList">
+        select t.unitId,
+        t.monitorName,
+        t.monitorAlias,
+        t.switchCode,
+        t.linkSwitch,
+        t.linkSwitchCode,
+        t.unitMode,
+        t.inputCount,
+        t.outputCount,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        rel.monitorChannelCode,
+        lmlr.logicChannelCode,
+        slc.channelName,
+        di.deviceName as switchName,
+        slc2.channelCode as channelCode,
+        slc2.channelName as channelCodeName
+        from logic_monitorunit_info t
+        left join logic_monitor_channel_unit_rel rel on rel.unitId = t.unitId
+        left join logic_monitorchannel_info lmi on lmi.monitorChannelCode = rel.monitorChannelCode
+        left join logic_monitorchannel_logicchannel_rel lmlr on lmlr.monitorChannelCode = rel.monitorChannelCode
+        left join signal_logic_channel slc on slc.channelCode = lmlr.logicChannelCode
+        left join device_info di on di.deviceCode = t.switchCode
+        left join logic_monitorunit_logicchannel_rel lmlr2 on lmlr2.monitorUnitId = t.unitId
+        left join logic_group_info lgi on lgi.id = lmlr2.logicGroupId
+        left join signal_logic_channel slc2 on slc2.channelCode = lgi.logicChannelCode
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+</mapper>

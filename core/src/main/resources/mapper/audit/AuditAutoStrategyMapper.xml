@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.audit.AuditAutoStrategyMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.audit.AuditAutoStrategy">
+                    <id column="strategyId" property="id" />
+                    <result column="strategyName" property="strategyName" />
+                    <result column="strategyDescribe" property="strategyDescribe" />
+                    <result column="channelRel" property="channelRel" />
+                    <result column="priority" property="priority" />
+                    <result column="timingMode" property="timingMode" />
+                    <result column="repeatSpan" property="repeatSpan" />
+                    <result column="dayOfWeek" property="dayOfWeek" />
+                    <result column="repeatMonthMode" property="repeatMonthMode" />
+                    <result column="repeatOfMonth" property="repeatOfMonth" />
+                    <result column="workRepeatMode" property="workRepeatMode" />
+                    <result column="workStartTime" property="workStartTime" />
+                    <result column="workEndTime" property="workEndTime" />
+                    <result column="workRepeatSpan" property="workRepeatSpan" />
+                    <result column="startDate" property="startDate" />
+                    <result column="endDate" property="endDate" />
+                    <result column="isForever" property="isForever" />
+                    <result column="isEnable" property="isEnable" />
+                    <result column="createUserId" property="createUserId" />
+                    <result column="createTime" property="createTime" />
+                    <result column="updateUserId" property="updateUserId" />
+                    <result column="updateTime" property="updateTime" />
+                    <result column="isDelete" property="isDelete" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            strategyId, strategyName, strategyDescribe, channelRel, priority, timingMode, repeatSpan, dayOfWeek, repeatMonthMode, repeatOfMonth, workRepeatMode, workStartTime, workEndTime, workRepeatSpan, startDate, endDate, isForever, isEnable, createUserId, createTime, updateUserId, updateTime, isDelete
+        </sql>
+
+</mapper>

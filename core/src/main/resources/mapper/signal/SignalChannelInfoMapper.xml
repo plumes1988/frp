@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalChannelInfoMapper">
+
+    <resultMap type="com.figure.core.model.signal.SignalChannelInfo" id="SignalChannelInfoResult">
+        <result property="channelId" column="channelId"/>
+        <result property="channelName" column="channelName"/>
+        <result property="channelAlias" column="channelAlias"/>
+        <result property="frequencyId" column="frequencyId"/>
+        <result property="frontId" column="frontId"/>
+        <result property="logicPositionId" column="logicPositionId"/>
+        <result property="interfaceId" column="interfaceId"/>
+        <result property="signalCode" column="signalCode"/>
+        <result property="bitRate" column="bitRate"/>
+        <result property="serviceId" column="serviceId"/>
+        <result property="logicChannelCode" column="logicChannelCode"/>
+        <result property="audioPid" column="audioPid"/>
+        <result property="videoPid" column="videoPid"/>
+        <result property="isCharge" column="isCharge"/>
+        <result property="videoType" column="videoType"/>
+        <result property="isEncrypt" column="isEncrypt"/>
+        <result property="mediaType" column="mediaType"/>
+        <result property="channelSource" column="channelSource"/>
+        <result property="channelImgUrl" column="channelImgUrl"/>
+        <result property="channelFlag" column="channelFlag"/>
+        <result property="syncStatus" column="syncStatus"/>
+        <result property="webURL" column="webURL"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSignalChannelInfoVO">
+        select channelId,
+               channelName,
+               channelAlias,
+               frequencyId,
+               frontId,
+               logicPositionId,
+               interfaceId,
+               signalCode,
+               bitRate,
+               serviceId,
+               logicChannelCode,
+               audioPid,
+               videoPid,
+               isCharge,
+               videoType,
+               isEncrypt,
+               mediaType,
+               channelSource,
+               channelImgUrl,
+               channelFlag,
+               syncStatus,
+               webURL,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from signal_channel_info
+    </sql>
+    <select id="selectSignalChannelInfoList" resultType="com.figure.core.model.signal.SignalChannelInfoList">
+        select t.channelId,
+               t.channelName,
+               t.channelAlias,
+               t.frequencyId,
+               t.frontId,
+               t.logicPositionId,
+               t.interfaceId,
+               t.signalCode,
+               t.bitRate,
+               t.serviceId,
+               t.logicChannelCode,
+               t.audioPid,
+               t.videoPid,
+               t.isCharge,
+               t.videoType,
+               t.isEncrypt,
+               t.mediaType,
+               t.channelSource,
+               t.channelImgUrl,
+               t.channelFlag,
+               t.syncStatus,
+               t.webURL,
+               t.createUserId,
+               t.createTime,
+               t.updateUserId,
+               t.updateTime,
+               t.isDelete,
+               fsi.frontName,
+               flp.positionName as logicPositionName,
+               sfi.frequencyName,
+               slc.channelName  as logicChannelCodeName
+        from signal_channel_info t
+                 left join front_station_info fsi on fsi.frontId = t.frontId
+                 left join front_logic_position flp on flp.positionId = t.logicPositionId
+                 left join signal_frequency_info sfi on sfi.frequencyId = t.frequencyId
+                 left join signal_logic_channel slc on slc.channelCode = t.logicChannelCode
+        where t.channelId = #{channelId}
+          and t.isDelete = 0
+    </select>
+
+</mapper>

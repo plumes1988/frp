@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.template.mapper.ReportTemplateMapper">
+    
+    <resultMap type="ReportTemplate" id="ReportTemplateResult">
+        <result property="templateId"    column="templateId"    />
+        <result property="templateName"    column="templateName"    />
+        <result property="templateType"    column="templateType"    />
+        <result property="createUserId"    column="createUserId"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="updateUserId"    column="updateUserId"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="isDelete"    column="isDelete"    />
+    </resultMap>
+
+    <sql id="selectReportTemplateVo">
+        select templateId, templateName, templateType, createUserId, createTime, updateUserId, updateTime, isDelete from report_template
+    </sql>
+    
+</mapper>

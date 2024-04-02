@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.record.RecordServiceClusterRelMapper">
+
+    <resultMap id="RecordServiceClusterRelResult" type="com.figure.core.model.record.RecordServiceClusterRel">
+        <result property="id" column="id"/>
+        <result property="recordClusterId" column="recordClusterId"/>
+        <result property="recordServiceId" column="recordServiceId"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectRecordServiceClusterRelVO">
+        select id,
+               recordClusterId,
+               recordServiceId,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from record_service_cluster_rel
+    </sql>
+
+</mapper>

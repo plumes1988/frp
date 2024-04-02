@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.sys.SysUserInfoMapper">
+    <resultMap type="com.figure.core.model.sys.SysUserInfo" id="SysUserInfoResult">
+        <result property="userId" column="userId"/>
+        <result property="token" column="token"/>
+        <result property="loginName" column="loginName"/>
+        <result property="userCode" column="userCode"/>
+        <result property="loginPass" column="loginPass"/>
+        <result property="telephone" column="telephone"/>
+        <result property="email" column="email"/>
+        <result property="imgUrl" column="imgUrl"/>
+        <result property="userFrom" column="userFrom"/>
+        <result property="sessionId" column="sessionId"/>
+        <result property="errorTimes" column="errorTimes"/>
+        <result property="lastLoginTime" column="lastLoginTime"/>
+        <result property="lockStatus" column="lockStatus"/>
+        <result property="complexion" column="complexion"/>
+        <result property="navigationMode" column="navigationMode"/>
+        <result property="homepage" column="homepage"/>
+        <result property="dataListSize" column="dataListSize"/>
+        <result property="isEnable" column="isEnable"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectUserInfoVO">
+        select userId, token, loginName, userCode, loginPass, telephone, email, imgUrl, userFrom, sessionId, errorTimes, lastLoginTime, lockStatus, complexion, navigationMode, homepage, dataListSize, isEnable, createUserId, createTime, updateUserId, updateTime, isDelete,theme,type from sys_user_info
+    </sql>
+</mapper>

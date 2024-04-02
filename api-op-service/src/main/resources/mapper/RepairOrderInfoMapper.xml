@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.RepairOrderInfoMapper">
+
+    <resultMap id="RepairOrderInfoPageVoResult" type="com.figure.op.duty.domain.vo.RepairOrderInfoPageVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="RepairOrderInfoPageVoResult">
+        select *
+        from repair_order_info d
+        <where>
+            d.isDelete = 0
+        </where>
+        order by d.repairOrderId desc
+    </select>
+</mapper>

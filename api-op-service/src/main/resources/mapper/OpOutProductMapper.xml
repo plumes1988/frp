@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.device.mapper.OpOutProductMapper">
+
+        <resultMap id="OpOutProductPageVoResult" type="com.figure.op.device.domain.vo.OpOutProductPageVo">
+        </resultMap>
+
+        <select id="selectVoPage" resultMap="OpOutProductPageVoResult">
+                select  oo.* , op.opProductName,
+                       op.deviceTypeId, dt.deviceTypeName,
+                       op.brandId ,brand.productName as brandName,
+                       op.modelId, model.modelCode
+                from op_out_product oo
+                    left join op_product_info op on oo.opProductId = op.opProductId
+                    left join device_type_info dt on op.deviceTypeId = dt.deviceTypeId
+                    left join device_product_info brand on op.brandId = brand.productId
+                    left join device_product_model model on op.modelId = model.modelId
+                <where>
+                        <if test="queryBo.opProductName != null and queryBo.opProductName != ''"> and op.opProductName like concat('%', #{queryBo.opProductName}, '%') </if>
+                        <if test="queryBo.deviceTypeId != null"> and op.deviceTypeId = #{queryBo.deviceTypeId} </if>
+                        <if test="queryBo.brandId != null"> and op.brandId = #{queryBo.brandId} </if>
+                        <if test="queryBo.modelId != null"> and op.modelId = #{queryBo.modelId} </if>
+                        <if test="queryBo.startCreateTime != null and queryBo.endCreateTime != null"> and oo.createTime between #{queryBo.startCreateTime} and #{queryBo.endCreateTime}</if>
+                        and oo.isDelete = 0
+                </where>
+                order by oo.outId desc
+        </select>
+
+</mapper>

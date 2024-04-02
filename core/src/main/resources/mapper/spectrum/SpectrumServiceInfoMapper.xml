@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.spectrum.SpectrumServiceInfoMapper">
+
+    <resultMap id="SpectrumServiceInfoResult" type="com.figure.core.model.spectrum.SpectrumServiceInfo">
+        <result property="id" column="id"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="startFrequency" column="startFrequency"/>
+        <result property="level" column="level"/>
+        <result property="endFrequency" column="endFrequency"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSpectrumServiceInfoVO">
+        select id,
+               serviceCode,
+               serviceName,
+               startFrequency,
+               endFrequency,
+               level,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from spectrum_service_info
+    </sql>
+    <select id="listrel" resultType="com.figure.core.model.spectrum.SpectrumServiceInfoList">
+        select t.id,
+        t.serviceCode,
+        t.serviceName,
+        t.startFrequency,
+        t.endFrequency,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        ssdr.id as relId,
+        ssdr.spectrumCode,
+        ssdr.centerFrequency,
+        ssdr.frequencySpan,
+        ssdr.RBW,
+        ssdr.VBW,
+        ssdr.level as level,
+        ssdr.startFrequency,
+        ssdr.endFrequency,
+        ssdr.serviceCode as relServiceCode, ssdr.spectrumCode,
+        ssdr.spectrumStatus
+        from spectrum_service_info t
+        left join spectrum_service_device_rel ssdr on ssdr.serviceCode = t.serviceCode
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+    <select id="getDetailById" resultType="java.util.HashMap">
+        select t.id,
+               t.serviceCode,
+               t.serviceName,
+               t.startFrequency,
+               t.endFrequency,
+               t.level,
+               t.createUserId,
+               t.createTime,
+               t.updateUserId,
+               t.updateTime,
+               t.isDelete,
+               di.deviceName,
+               di.deviceCode,
+               fsi.frontName,
+               flp.positionName,
+               case di.deviceStructure when 1 then '一体设备' when 2 then '机箱' when 3 then '插卡设备' else null end,
+               dt1.typeName as deviceTypeName,
+               dt2.typeName as deviceSubTypeName,
+               di.controlIP,
+               di.dataIPs
+        from spectrum_service_info t
+                 left join device_info di on di.deviceCode = t.serviceCode
+                 left join front_station_info fsi on fsi.frontId = di.monitorStationId
+                 left join front_logic_position flp on flp.positionId = di.logicPositionId
+                 left join device_type dt1 on dt1.typeCode = di.deviceType
+                 left join device_type dt2 on dt2.typeCode = di.deviceSubType
+        where t.id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.transcode.TranscodeStatusInfoMapper">
+
+    <resultMap id="TranscodeStatusInfoResult" type="com.figure.core.model.transcode.TranscodeStatusInfo">
+        <result property="transcodeId" column="transcodeId"/>
+        <result property="serverStatus" column="serverStatus"/>
+        <result property="serverRuntime" column="serverRuntime"/>
+        <result property="cpuUsage" column="cpuUsage"/>
+        <result property="memoryUsage" column="memoryUsage"/>
+        <result property="gpuUsage" column="gpuUsage"/>
+        <result property="gMemoryUsage" column="gMemoryUsage"/>
+        <result property="diskUsage" column="diskUsage"/>
+        <result property="usedBitRate" column="usedBitRate"/>
+        <result property="totalBitRate" column="totalBitRate"/>
+        <result property="lastUpdateTime" column="lastUpdateTime"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectTranscodeStatusInfoVO">
+        select transcodeId,
+               serverStatus,
+               serverRuntime,
+               cpuUsage,
+               memoryUsage,
+               gpuUsage,
+               gMemoryUsage,
+               diskUsage,
+               usedBitRate,
+               totalBitRate,
+               lastUpdateTime,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from transcode_status_info
+    </sql>
+
+</mapper>

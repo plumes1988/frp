@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.alarm.AlarmMessageInfoMapper">
+
+    <resultMap id="AlarmMessageInfoResult" type="com.figure.core.model.alarm.AlarmMessageInfo">
+        <result property="alarmId" column="alarmId"/>
+        <result property="mediaType" column="mediaType"/>
+        <result property="systemCode" column="systemCode"/>
+        <result property="systemName" column="systemName"/>
+        <result property="frontId" column="frontId"/>
+        <result property="frontName" column="frontName"/>
+        <result property="logicPositionId" column="logicPositionId"/>
+        <result property="logicPositionName" column="logicPositionName"/>
+        <result property="signalId" column="signalId"/>
+        <result property="signalName" column="signalName"/>
+        <result property="refSystemCode" column="refSystemCode"/>
+        <result property="refSystemName" column="refSystemName"/>
+        <result property="refFrontId" column="refFrontId"/>
+        <result property="refFrontName" column="refFrontName"/>
+        <result property="refLogicPositionId" column="refLogicPositionId"/>
+        <result property="refLogicPositionName" column="refLogicPositionName"/>
+        <result property="refSignalId" column="refSignalId"/>
+        <result property="refSignalName" column="refSignalName"/>
+        <result property="alarmTypeId" column="alarmTypeId"/>
+        <result property="alarmTypeName" column="alarmTypeName"/>
+        <result property="startTime" column="startTime"/>
+        <result property="endTime" column="endTime"/>
+        <result property="duration" column="duration"/>
+        <result property="alarmFlag" column="alarmFlag"/>
+        <result property="commitFlag" column="commitFlag"/>
+        <result property="commitInfo" column="commitInfo"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectAlarmMessageInfoVO">
+        select alarmId,
+               mediaType,
+               systemCode,
+               systemName,
+               frontId,
+               frontName,
+               logicPositionId,
+               logicPositionName,
+               signalId,
+               signalName,
+               refSystemCode,
+               refSystemName,
+               refFrontId,
+               refFrontName,
+               refLogicPositionId,
+               refLogicPositionName,
+               refSignalId,
+               refSignalName,
+               alarmTypeId,
+               alarmTypeName,
+               startTime,
+               endTime,
+               duration,
+               alarmFlag,
+               commitFlag,
+               commitInfo,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from alarm_message_info
+    </sql>
+
+</mapper>

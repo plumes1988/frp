@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.audit.AuditAutoTaskMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.audit.AuditAutoTask">
+                    <id column="taskId" property="id"/>
+                    <result column="auditserverCode" property="auditserverCode" />
+                    <result column="clipId" property="clipId" />
+                    <result column="progress" property="progress" />
+                    <result column="priority" property="priority" />
+                    <result column="createTime" property="createTime" />
+                    <result column="completionTime" property="completionTime" />
+                    <result column="taskStatus" property="taskStatus" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            t.taskId, t.auditserverCode, t.clipId, t.progress, t.priority, t.createTime, t.completionTime, t.taskStatus
+        </sql>
+
+        <select id="selectPage" resultMap="BaseResultMap">
+            select
+            <include refid="Base_Column_List"/>,aas.auditServerName,aas.auditServerIP,aas.localPath,aclpi.clipName,aclpi.clipExtension
+            from audit_auto_task t left join audit_auto_server aas on aas.auditServerCode = t.auditServerCode left join audit_clip_info aclpi on aclpi.clipId=t.clipId
+            <where>
+                <if test="conditions.taskStatus != null">
+                    <!--t.taskStatus in <![CDATA[ (#{conditions.taskStatus,jdbcType=INTEGER})]]>-->
+                    t.taskStatus in (${conditions.taskStatus})
+                </if>
+                <if test="conditions.auditServerName != null" >
+                    AND aas.auditServerName = #{conditions.auditServerName}
+                </if>
+                <if test="conditions.clipName != null">
+                    AND aclpi.clipName = #{conditions.clipName}
+                </if>
+                <if test="conditions.begin_createTime != null">
+                    AND t.createTime >= #{conditions.begin_createTime}
+                </if>
+                <if test="conditions.end_createTime != null">
+                    AND #{conditions.end_createTime} >= t.createTime
+                </if>
+                <if test="conditions.priority != null">
+                    AND  t.priority = #{conditions.priority}
+                </if>
+            </where>
+        </select>
+
+
+
+</mapper>

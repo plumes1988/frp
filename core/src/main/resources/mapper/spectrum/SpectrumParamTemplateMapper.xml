@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.spectrum.SpectrumParamTemplateMapper">
+    
+    <resultMap id="SpectrumParamTemplateResult" type="com.figure.core.model.spectrum.SpectrumParamTemplate">
+        <result property="id" column="id"/>
+        <result property="templateName" column="templateName"/>
+        <result property="centerFrequency" column="centerFrequency"/>
+        <result property="frequencySpan" column="frequencySpan"/>
+        <result property="RBW" column="RBW"/>
+        <result property="VBW" column="VBW"/>
+        <result property="level" column="level"/>
+        <result property="startFrequency" column="startFrequency"/>
+        <result property="endFrequency" column="endFrequency"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSpectrumParamTemplateVO">
+        select id, templateName, centerFrequency, frequencySpan, RBW, VBW, level, startFrequency, endFrequency, createUserId, createTime, updateUserId, updateTime, isDelete from spectrum_param_template
+    </sql>
+
+</mapper>

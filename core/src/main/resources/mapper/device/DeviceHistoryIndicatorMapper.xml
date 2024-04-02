@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceHistoryIndicatorMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceHistoryIndicator">
+                <result column="id" property="id" />
+                <result column="deviceId" property="deviceId" />
+                <result column="deviceCode" property="deviceCode" />
+                <result column="indicatorCode" property="indicatorCode" />
+                <result column="indicatorValue" property="indicatorValue" />
+                <result column="updateTime" property="updateTime" />
+                <result column="collectTime" property="collectTime" />
+                <result column="createTime" property="createTime" />
+                <result column="receiveTime" property="receiveTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+           id, deviceId, deviceCode, indicatorCode, indicatorValue, updateTime, collectTime, createTime, receiveTime
+        </sql>
+
+        <select id="list" resultMap="BaseResultMap">
+                select
+                <include refid="Base_Column_List"/> from ${conditions.tableName} as t
+                <where>
+                    <if test="conditions.indicatorCode != null">
+                        AND t.indicatorCode = #{conditions.indicatorCode}
+                    </if>
+                    <if test="conditions.multi_indicatorCode != null">
+                        AND  t.indicatorCode in (${conditions.multi_indicatorCode})
+                    </if>
+                    <if test="conditions.begin_collectTime != null">
+                        AND t.collectTime >= #{conditions.begin_collectTime}
+                    </if>
+                    <if test="conditions.end_collectTime != null">
+                        AND #{conditions.end_collectTime} >= t.collectTime
+                    </if>
+                </where>
+        </select>
+
+        <select id="count" resultType="java.lang.Integer">
+                select
+                COUNT(1)
+                from ${conditions.tableName} as t
+                <where>
+                    <if test="conditions.indicatorCode != null">
+                       AND t.indicatorCode = #{conditions.indicatorCode}
+                    </if>
+                    <if test="conditions.multi_indicatorCode != null">
+                       AND  t.indicatorCode in (${conditions.multi_indicatorCode})
+                    </if>
+                    <if test="conditions.begin_collectTime != null">
+                       AND t.collectTime >= #{conditions.begin_collectTime}
+                    </if>
+                    <if test="conditions.end_collectTime != null">
+                       AND #{conditions.end_collectTime} >= t.collectTime
+                    </if>
+                </where>
+        </select>
+
+</mapper>

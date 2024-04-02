@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicInterfaceChannelRelMapper">
+
+    <resultMap id="LogicInterfaceChannelRelResult" type="com.figure.core.model.logic.LogicInterfaceChannelRel">
+        <result property="id" column="id"/>
+        <result property="interfaceId" column="interfaceId"/>
+        <result property="groupId" column="groupId"/>
+        <result property="channelId" column="channelId"/>
+        <result property="channelId" column="channelId"/>
+        <result property="channelGrade" column="channelGrade"/>
+        <result property="isLinkSwitch" column="isLinkSwitch"/>
+        <result property="linkSwitchCode" column="linkSwitchCode"/>
+        <result property="linkSwitchSerialNo" column="linkSwitchSerialNo"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicInterfaceChannelRelVO">
+        select id,
+               interfaceId,
+               groupId,
+               channelId,
+               channelGrade,
+               isLinkSwitch,
+               linkSwitchCode,
+               linkSwitchSerialNo,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_interface_channel_rel
+    </sql>
+    <select id="treelist" resultType="com.figure.core.model.logic.LogicInterfaceChannelRelList">
+        select t.id,
+        t.interfaceId,
+        t.groupId,
+        t.channelId,
+        t.channelGrade,
+        t.isLinkSwitch,
+        t.linkSwitchCode,
+        t.linkSwitchSerialNo,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        slc.channelName as logicChannelName,
+        flp.positionName as positionName,
+        sci.channelName as channelName,
+        di.deviceName as linkSwitchName,
+        lgi.groupName as groupName
+        from logic_interface_channel_rel t
+        left join signal_channel_info sci on sci.channelId = t.channelId
+        left join signal_logic_channel slc on slc.channelCode = sci.logicChannelCode
+        left join front_logic_position flp on flp.positionId = sci.logicPositionId
+        left join device_info di on di.deviceCode = t.linkSwitchCode
+        left join logic_monitorunit_interface_rel lmir on lmir.interfaceId = t.interfaceId
+        left join logic_group_info lgi on lgi.id = t.groupId
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+</mapper>

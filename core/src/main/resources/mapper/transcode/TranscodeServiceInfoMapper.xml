@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.transcode.TranscodeServiceInfoMapper">
+
+    <resultMap id="TranscodeServiceInfoResult" type="com.figure.core.model.transcode.TranscodeServiceInfo">
+        <result property="transcodeServiceId" column="transcodeServiceId"/>
+        <result property="transcodeServiceName" column="transcodeServiceName"/>
+        <result property="frontId" column="frontId"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="transcodeServiceIP" column="transcodeServiceIP"/>
+        <result property="totalResources" column="totalResources"/>
+        <result property="usedResources" column="usedResources"/>
+        <result property="useGPU" column="useGPU"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectTranscodeServiceInfoVO">
+        select transcodeServiceId,
+               transcodeServiceName,
+               frontId,
+               serviceCode,
+               serviceName,
+               transcodeServiceIP,
+               totalResources,
+               usedResources,
+               useGPU,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from transcode_service_info
+    </sql>
+
+    <select id="selectServiceInfoByClusterId" resultType="com.figure.core.model.transcode.TranscodeServiceInfo">
+        SELECT t.transcodeServiceId,
+               t.transcodeServiceName,
+               t.frontId,
+               t.serviceCode,
+               t.serviceName,
+               t.transcodeServiceIP,
+               t.totalResources,
+               t.usedResources,
+               t.useGPU,
+               t.createUserId,
+               t.createTime,
+               t.updateUserId,
+               t.updateTime,
+               t.isDelete,
+               tci.transcodeClusterId as parentId,
+               fsi.frontName,
+               tci.transcodeClusterName
+        FROM transcode_service_info t
+                 LEFT JOIN transcode_service_cluster_rel tscr ON tscr.transcodeServiceId = t.transcodeServiceId
+                 LEFT JOIN transcode_cluster_info tci ON tci.transcodeClusterId = tscr.transcodeClusterId
+                 left join front_station_info fsi on fsi.frontId = t.frontId
+        WHERE tci.isDelete = 0
+          AND t.isDelete = 0
+          AND tci.transcodeClusterId = #{transcodeClusterId}
+    </select>
+</mapper>

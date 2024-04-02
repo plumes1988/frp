@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalFrequencyInfoMapper">
+
+    <resultMap type="com.figure.core.model.signal.SignalFrequencyInfo" id="SignalFrequencyInfoResult">
+        <result property="frequencyId" column="frequencyId"/>
+        <result property="frequencyName" column="frequencyName"/>
+        <result property="frontId" column="frontId"/>
+        <result property="logicPositionId" column="logicPositionId"/>
+        <result property="signalCode" column="signalCode"/>
+        <result property="bitRate" column="bitRate"/>
+        <result property="frequencyValue" column="frequencyValue"/>
+        <result property="interfaceId" column="interfaceId"/>
+        <result property="frequencyFlag" column="frequencyFlag"/>
+        <result property="syncStatus" column="syncStatus"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSignalFrequencyInfoVO">
+        select frequencyId,
+               frequencyName,
+               frontId,
+               logicPositionId,
+               signalCode,
+               bitRate,
+               frequencyValue,
+               interfaceId,
+               frequencyFlag,
+               syncStatus,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from signal_frequency_info
+    </sql>
+    <select id="treelist" resultType="com.figure.core.model.signal.SignalFrequencyInfoList">
+        select t.frequencyId,
+               t.frequencyName,
+               t.frontId,
+               t.logicPositionId,
+               t.signalCode,
+               t.bitRate,
+               t.frequencyValue,
+               t.interfaceId,
+               t.frequencyFlag,
+               t.syncStatus,
+               t.createUserId,
+               t.createTime,
+               t.updateUserId,
+               t.updateTime,
+               t.isDelete,
+               sti.signalUnit
+        from signal_frequency_info t
+                 left join signal_type_info sti on t.signalCode = sti.signalCode
+    </select>
+
+</mapper>

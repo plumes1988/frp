@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicCompareInfoMapper">
+
+    <resultMap id="LogicCompareInfoResult" type="com.figure.core.model.logic.LogicCompareInfo">
+        <result property="id" column="id"/>
+        <result property="groupId" column="groupId"/>
+        <result property="mainChannelId" column="mainChannelId"/>
+        <result property="compareChannelId" column="compareChannelId"/>
+        <result property="relSwitcher" column="relSwitcher"/>
+        <result property="relSwitcherNumber" column="relSwitcherNumber"/>
+        <result property="relInterfaceId" column="relInterfaceId"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicCompareInfoVO">
+        select id,
+               groupId,
+               mainChannelId,
+               compareChannelId,
+               relSwitcher,
+               relSwitcherNumber,
+               relInterfaceId,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_compare_info
+    </sql>
+    <select id="treelist" resultType="com.figure.core.model.logic.LogicCompareInfoList">
+        select t.id,
+        t.groupId,
+        t.mainChannelId,
+        t.compareChannelId,
+        t.relSwitcher,
+        t.relSwitcherNumber,
+        t.relInterfaceId,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        sci1.logicPositionId as mainLogicPositionId,
+        sci2.logicPositionId as compareLogicPositionId,
+        flp1.positionName as mainLogicPositionName,
+        flp2.positionName as compareLogicPositionName,
+        sci1.channelName as mainChannelName,
+        sci2.channelName as compareChannelName,
+        lgi.logicChannelCode as logicChannelCode,
+        lmii.interfaceName as relInterfaceName,
+        di.deviceName as deviceName
+        from logic_compare_info t
+        left join signal_channel_info sci1 on sci1.channelId = t.mainChannelId
+        left join front_logic_position flp1 on flp1.positionId = sci1.logicPositionId
+        left join signal_channel_info sci2 on sci2.channelId = t.compareChannelId
+        left join front_logic_position flp2 on flp2.positionId = sci2.logicPositionId
+        left join logic_group_info lgi on lgi.id = t.groupId
+        left join logic_monitorunit_interface_info lmii on lmii.interfaceId = t.relInterfaceId
+        left join logic_monitorunit_interface_rel lmir on lmir.interfaceId = t.relInterfaceId
+        left join logic_monitorunit_info lmi on lmi.unitId = lmir.unitId
+        left join device_info di on di.deviceCode = lmi.switchCode
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+</mapper>

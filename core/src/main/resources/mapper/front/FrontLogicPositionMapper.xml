@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.front.FrontLogicPositionMapper">
+    
+    <resultMap type="com.figure.core.model.front.FrontLogicPosition" id="FrontLogicPositionResult">
+        <result property="positionId" column="positionId"/>
+        <result property="positionName" column="positionName"/>
+        <result property="positionAlias" column="positionAlias"/>
+        <result property="frontId" column="frontId"/>
+        <result property="location" column="location"/>
+        <result property="linkType" column="linkType"/>
+        <result property="linkLevel" column="linkLevel"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="syncStatus" column="syncStatus"/>
+        <result property="isEnable" column="isEnable"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectFrontLogicPositionVO">
+        select positionId,
+               positionName,
+               positionAlias,
+               frontId,
+               location,
+               linkType,
+               linkLevel,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               syncStatus,
+               isEnable,
+               isDelete
+        from front_logic_position
+    </sql>
+
+</mapper>

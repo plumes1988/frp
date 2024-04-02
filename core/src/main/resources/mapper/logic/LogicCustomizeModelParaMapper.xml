@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicCustomizeModelParaMapper">
+
+    <resultMap id="LogicCustomizeModelParaResult" type="com.figure.core.model.logic.LogicCustomizeModelPara">
+        <result property="id" column="id"/>
+        <result property="customizeModelId" column="customizeModelId"/>
+        <result property="logic" column="logic"/>
+        <result property="source" column="source"/>
+        <result property="positionId1" column="positionId1"/>
+        <result property="positionId2" column="positionId2"/>
+        <result property="message" column="message"/>
+        <result property="linkStruct" column="linkStruct"/>
+        <result property="anomalStatus" column="anomalStatus"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicCustomizeModelParaVO">
+        select id,
+               customizeModelId,
+               logic,
+               source,
+               positionId1,
+               positionId2,
+               message,
+               linkStruct,
+               anomalStatus,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_customize_model_para
+    </sql>
+
+</mapper>

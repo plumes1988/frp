@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicMonitorchannelInfoMapper">
+
+    <resultMap id="LogicMonitorchannelInfoResult" type="com.figure.core.model.logic.LogicMonitorchannelInfo">
+        <result property="monitorChannelCode" column="monitorChannelCode"/>
+        <result property="monitorChannelName" column="monitorChannelName"/>
+        <result property="monitorChannelAlias" column="monitorChannelAlias"/>
+        <result property="comparisonMode" column="comparisonMode"/>
+        <result property="autoEmergency" column="autoEmergency"/>
+        <result property="autoSwitchBack" column="autoSwitchBack"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicMonitorchannelInfoVO">
+        select monitorChannelCode,
+               monitorChannelName,
+               monitorChannelAlias,
+               comparisonMode,
+               autoEmergency,
+               autoSwitchBack,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_monitorchannel_info
+    </sql>
+    <select id="listByQuery" resultType="com.figure.core.model.logic.LogicMonitorchannelInfoList">
+        select lmci.monitorChannelCode,
+               lmci.monitorChannelName,
+               lmci.monitorChannelAlias,
+               lmci.comparisonMode,
+               lmci.autoEmergency,
+               lmci.autoSwitchBack,
+               lmui.unitId,
+               lmui.monitorName,
+               lmui.monitorAlias,
+               lmui.switchCode,
+               lmui.linkSwitch,
+               lmui.linkSwitchCode,
+               lmui.unitMode,
+               lmui.inputCount,
+               lmui.outputCount
+        from logic_monitor_channel_unit_rel rel
+                 left join logic_monitorchannel_info lmci on rel.monitorChannelCode = lmci.monitorChannelCode
+                 left join logic_monitorunit_info lmui on rel.unitId = lmui.unitId
+    </select>
+
+</mapper>

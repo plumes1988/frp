@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.record.RecordTaskInfoMapper">
+
+    <resultMap id="RecordTaskInfoResult" type="com.figure.core.model.record.RecordTaskInfo">
+        <result property="recordTaskId" column="recordTaskId"/>
+        <result property="recordTaskName" column="recordTaskName"/>
+        <result property="mediaType" column="mediaType"/>
+        <result property="signalId" column="signalId"/>
+        <result property="signalURL" column="signalURL"/>
+        <result property="bitRate" column="bitRate"/>
+        <result property="transcodeRuleId" column="transcodeRuleId"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="serviceIP" column="serviceIP"/>
+        <result property="inputIP" column="inputIP"/>
+        <result property="recordMode" column="recordMode"/>
+        <result property="isHLS" column="isHLS"/>
+        <result property="saveTime" column="saveTime"/>
+        <result property="taskStatus" column="taskStatus"/>
+        <result property="errorInfo" column="errorInfo"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectRecordTaskInfoVO">
+        select recordTaskId,
+               recordTaskName,
+               mediaType,
+               signalId,
+               signalURL,
+               bitRate,
+               transcodeRuleId,
+               serviceCode,
+               serviceIP,
+               inputIP,
+               recordMode,
+               isHLS,
+               saveTime,
+               taskStatus,
+               errorInfo,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from record_task_info
+    </sql>
+
+    <select id="queryRecordTaskInfoByServiceId" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        SELECT (@i := @i + 1)  AS                     channelIndex,
+               rti.signalId,
+               sci.channelName AS                     channelName,
+               sti.signalName  AS                     singalTypeName,
+               CASE
+                   rti.recordMode
+                   WHEN '0' THEN
+                       '全程录制'
+                   WHEN '1' THEN
+                       '定时收录'
+                   WHEN '2' THEN
+                       '报警触发录制'
+                   WHEN '3' THEN
+                       '节目单触发录制'
+                   WHEN '4' THEN
+                       '手动录制'
+                   ELSE NULL
+                   END                                instructString,
+               CASE
+                   sci.videoType
+                   WHEN 0 THEN
+                       'SD'
+                   WHEN 0 THEN
+                       'HD'
+                   WHEN 0 THEN
+                       '4K'
+                   ELSE NULL
+                   END                                videoTypeString,
+               sci.videoType,
+               IF(rti.taskStatus = 2, '录制中断', '录制正常') taskStatusString
+        FROM record_service_info rsi
+                 LEFT JOIN record_task_info rti ON rti.serviceCode = rsi.serviceCode
+                 LEFT JOIN signal_channel_info sci ON sci.channelId = rti.signalId
+                 LEFT JOIN signal_type_info sti ON sti.signalCode = sci.signalCode,
+             (
+                 SELECT @i := 0
+             ) AS it
+        WHERE rti.taskStatus = 1
+          and rsi.recordServiceId = #{recordServiceId:INTEGER}
+    </select>
+
+    <select id="listByQuery" parameterType="com.figure.core.query.record.RecordTaskInfoQuery"
+            resultType="com.figure.core.model.record.RecordTaskInfoList">
+        select rti.recordTaskId,
+        rti.recordTaskName,
+        rti.mediaType,
+        rti.signalId,
+        rti.transcodeRuleId,
+        rti.serviceCode,
+        rti.serviceName,
+        rti.serviceIP,
+        rti.inputIP,
+        rti.recordMode,
+        rti.signalURL,
+        rti.bitRate,
+        rti.saveTime,
+        rti.taskStatus,
+        rti.errorInfo,
+        rti.isHLS,
+        rti.isDelete,
+        rti.createUserId,
+        rti.createTime,
+        rti.updateUserId,
+        rti.updateTime,
+        rsi.recordServiceName,
+        rsi.recordServiceId,
+        tri.ruleName,
+        sci.channelName,
+        sci.channelSource,
+        sfi.frequencyName,
+        fsi.frontName,
+        flp.positionName,
+        sci.channelName as signalName,
+        sti.signalName as signalTypeName,
+        slc.channelName as logicChannelName,
+        rci.recordClusterName
+        from record_task_info rti
+        LEFT JOIN record_service_info rsi on rsi.serviceCode = rti.serviceCode
+        LEFT JOIN record_service_cluster_rel rscr on rscr.recordServiceId = rsi.recordServiceId
+        LEFT JOIN record_cluster_info rci on rci.recordClusterId = rscr.recordClusterId
+        LEFT JOIN transcode_rule_info tri ON tri.ruleId = rti.transcodeRuleId
+        LEFT JOIN signal_channel_info sci ON sci.channelId = rti.signalId
+        LEFT JOIN signal_logic_channel slc on slc.channelCode = sci.logicChannelCode
+        LEFT JOIN signal_frequency_info sfi ON sfi.frequencyId = sci.frequencyId
+        LEFT JOIN front_station_info fsi ON fsi.frontId = sci.frontId
+        LEFT JOIN front_logic_position flp ON flp.positionId = sci.logicPositionId
+        LEFT JOIN signal_type_info sti ON sti.signalCode = sci.signalCode
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

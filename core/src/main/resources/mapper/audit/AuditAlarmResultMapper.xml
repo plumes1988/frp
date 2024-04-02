@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.audit.AuditAlarmResultMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.audit.AuditAlarmResult">
+                    <id column="clipId" property="id" />
+                    <result column="alarmId" property="alarmId" />
+                    <result column="trimIn" property="trimIn" />
+                    <result column="alarmDuration" property="alarmDuration" />
+                    <result column="analysisData" property="analysisData" />
+                    <result column="auditStatus" property="auditStatus" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            t.clipId, t.alarmId, t.trimIn, t.alarmDuration, t.analysisData, t.auditStatus
+        </sql>
+
+
+        <select id="list" resultMap="BaseResultMap">
+            select
+            <include refid="Base_Column_List"/>,aclpi.clipName,aai.alarmName,slc.channelName
+            from audit_alarm_result t
+                 left join audit_clip_info aclpi on aclpi.clipId=t.clipId
+                 left join audit_alarm_info aai on aai.alarmId = t.alarmId
+                 left join audit_program_schedule aps on aps.clipId = aclpi.clipId
+                 left join signal_logic_channel slc on slc.channelCode = aps.channelCode
+            <where>
+                <if test="conditions.clipName != null">
+                    aclpi.clipName = #{conditions.clipName}
+                </if>
+                <if test="conditions.channelName != null">
+                    AND  slc.channelName = #{conditions.channelName}
+                </if>
+                <if test="conditions.alarmName != null">
+                    AND  aai.alarmName = #{conditions.alarmName}
+                </if>
+                <if test="conditions.auditStatus != null">
+                    AND  t.auditStatus = #{conditions.auditStatus}
+                </if>
+            </where>
+        </select>
+
+        <select id="count" resultType="java.lang.Integer">
+        select
+            COUNT(1)
+            from audit_alarm_result t
+            left join audit_clip_info aclpi on aclpi.clipId=t.clipId
+            left join audit_alarm_info aai on aai.alarmId = t.alarmId
+            left join audit_program_schedule aps on aps.clipId = aclpi.clipId
+            left join signal_logic_channel slc on slc.channelCode = aps.channelCode
+            <where>
+                <if test="conditions.clipName != null">
+                    aclpi.clipName = #{conditions.clipName}
+                </if>
+                <if test="conditions.channelName != null">
+                    AND  slc.channelName = #{conditions.channelName}
+                </if>
+                <if test="conditions.alarmName != null">
+                    AND  aai.alarmName = #{conditions.alarmName}
+                </if>
+                <if test="conditions.auditStatus != null">
+                    AND  t.auditStatus = #{conditions.auditStatus}
+                </if>
+            </where>
+        </select>
+
+</mapper>

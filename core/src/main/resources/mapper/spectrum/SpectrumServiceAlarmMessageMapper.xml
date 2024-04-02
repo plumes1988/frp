@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.spectrum.SpectrumServiceAlarmMessageMapper">
+    
+    <resultMap id="SpectrumServiceAlarmMessageResult" type="com.figure.core.model.spectrum.SpectrumServiceAlarmMessage">
+        <result property="alarmId" column="alarmId"/>
+        <result property="alarmClass" column="alarmClass"/>
+        <result property="serviceCode" column="serviceCode"/>
+        <result property="serviceName" column="serviceName"/>
+        <result property="relId" column="relId"/>
+        <result property="spectrumCode" column="spectrumCode"/>
+        <result property="spectrumName" column="spectrumName"/>
+        <result property="alarmType" column="alarmType"/>
+        <result property="alarmTypeName" column="alarmTypeName"/>
+        <result property="startTime" column="startTime"/>
+        <result property="endTime" column="endTime"/>
+        <result property="lastUpdateTime" column="lastUpdateTime"/>
+        <result property="duration" column="duration"/>
+        <result property="alarmFlag" column="alarmFlag"/>
+        <result property="alarmContent" column="alarmContent"/>
+        <result property="commitFlag" column="commitFlag"/>
+        <result property="commitInfo" column="commitInfo"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectSpectrumServiceAlarmMessageVO">
+        select alarmId, alarmClass, serviceCode, serviceName, relId, spectrumCode, spectrumName, alarmType,
+               alarmTypeName, startTime, endTime, lastUpdateTime, duration, alarmFlag, alarmContent,
+               commitFlag, commitInfo, createUserId, createTime, updateUserId, updateTime, isDelete from spectrum_service_alarm_message
+    </sql>
+
+</mapper>

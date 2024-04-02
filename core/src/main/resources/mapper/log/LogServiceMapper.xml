@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.log.LogServiceMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.log.LogService">
+            <result column="id" property="id" />
+            <result column="sourceService" property="sourceService" />
+            <result column="serviceType" property="serviceType" />
+            <result column="timestamp" property="timestamp" />
+            <result column="level" property="level" />
+            <result column="message" property="message" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            id,sourceApplication,timestamp,level,message,applicationType
+        </sql>
+
+</mapper>

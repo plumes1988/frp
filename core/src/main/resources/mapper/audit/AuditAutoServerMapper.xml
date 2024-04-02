@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.audit.AuditAutoServerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.figure.core.model.audit.AuditAutoServer">
+        <id column="auditServerCode" property="id" />
+        <result column="auditServerName" property="auditServerName" />
+        <result column="auditServerIP" property="auditServerIP" />
+        <result column="maxTaskNum" property="maxTaskNum" />
+        <result column="isEnable" property="isEnable" />
+        <result column="localPath" property="localPath" />
+        <result column="createUserId" property="createUserId" />
+        <result column="createTime" property="createTime" />
+        <result column="updateUserId" property="updateUserId" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        t.auditServerCode as id, t.auditServerName, t.auditServerIP, t.maxTaskNum, t.isEnable, t.localPath, t.createUserId, t.createTime, t.updateUserId, t.updateTime
+    </sql>
+
+    <select id="selectMaxServer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        audit_auto_server t left join audit_auto_task t1 on t.auditServerCode = t1.auditserverCode where t1.taskStatus!=4 group by t.auditServerCode order by t.maxTaskNum-count(t1.taskId) desc
+    </select>
+
+</mapper>

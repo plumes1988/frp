@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.multiview.MultiviewSubscreenParaMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.multiview.MultiviewSubscreenPara">
+                    <id column="paraId" property="paraId" />
+                    <result column="subScreenType" property="subScreenType" />
+                    <result column="paraName" property="paraName" />
+                    <result column="paraType" property="paraType" />
+                    <result column="paraValue" property="paraValue" />
+                    <result column="communicationFeld" property="communicationFeld" />
+                    <result column="sortNo" property="sortNo" />
+                    <result column="remark" property="remark" />
+                    <result column="createUserId" property="createUserId" />
+                    <result column="createTime" property="createTime" />
+                    <result column="updateUserId" property="updateUserId" />
+                    <result column="updateTime" property="updateTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            paraId, subScreenType, paraName, paraType, paraValue, communicationFeld, sortNo, remark, createUserId, createTime, updateUserId, updateTime
+        </sql>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalAlarmthresholdRuleMapper">
+
+    <resultMap id="SignalAlarmthresholdRuleResult" type="com.figure.core.model.signal.SignalAlarmthresholdRule">
+        <result property="ruleId" column="ruleId"/>
+        <result property="ruleName" column="ruleName"/>
+        <result property="ruleDescription" column="ruleDescription"/>
+        <result property="synStatus" column="synStatus"/>
+    </resultMap>
+
+    <sql id="selectSignalAlarmthresholdRuleVO">
+        select ruleId, ruleName, ruleDescription, synStatus
+        from signal_alarmthreshold_rule
+    </sql>
+
+    <select id="listByQuery" parameterType="com.figure.core.query.signal.SignalAlarmthresholdRuleQuery"
+            resultType="com.figure.core.model.signal.SignalAlarmthresholdRule">
+        select ruleId, ruleName, ruleDescription, synStatus
+        from signal_alarmthreshold_rule
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

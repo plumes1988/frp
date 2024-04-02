@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.op.OpScheduleHandoverMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.op.OpScheduleHandover">
+                <result column="id" property="id" />
+                    <result column="schedulerId" property="schedulerId" />
+                    <result column="stateChecks" property="stateChecks" />
+                    <result column="log" property="log" />
+                    <result column="takeOverUserId" property="takeOverUserId" />
+                    <result column="mark" property="mark" />
+                    <result column="state" property="state" />
+                    <result column="turnOverDateTime" property="turnOverDateTime" />
+                    <result column="takeOverDateTime" property="takeOverDateTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+                t0.id,
+            t0.schedulerId,t0.stateChecks, t0.log, t0.takeOverSchedulerId, t0.mark, t0.state, t0.turnOverDateTime, t0.takeOverDateTime
+        </sql>
+
+        <select id="list" resultType="hashmap">
+            select
+            <include refid="Base_Column_List"/>,t1.day,t2.startTime,t2.endTime,t3.userName,t2.planName
+            from op_schedule_handover t0 left join op_schedule_scheduler t1 on t0.schedulerId = t1.id left join  op_schedule_plan t2 on t1.pid = t2.pid left join sys_user_info t3 on t1.userId = t3.userId
+            <where>
+                <if test="conditions.schedulerId != null">
+                    t0.schedulerId = #{conditions.schedulerId}
+                </if>
+                <if test="conditions.day != null">
+                    t1.day = #{conditions.day}
+                </if>
+                <if test="conditions.userName != null">
+                    t3.userName = #{conditions.userName}
+                </if>
+            </where>
+        </select>
+
+        <select id="count" resultType="java.lang.Integer">
+            select
+            COUNT(1)
+            from op_schedule_handover t0 left join op_schedule_scheduler t1 on t0.schedulerId = t1.id left join  op_schedule_plan t2 on t1.pid = t2.pid left join sys_user_info t3 on t1.userId = t3.userId
+            <where>
+                <if test="conditions.schedulerId != null">
+                    t0.schedulerId = #{conditions.schedulerId}
+                </if>
+                <if test="conditions.day != null">
+                    t1.day = #{conditions.day}
+                </if>
+                <if test="conditions.userName != null">
+                    t3.userName = #{conditions.userName}
+                </if>
+            </where>
+        </select>
+
+</mapper>

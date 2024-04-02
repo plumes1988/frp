@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.signal.SignalEpgInfoMapper">
+    
+    <resultMap type="com.figure.core.model.signal.SignalEpgInfo" id="SignalEpgInfoResult">
+        <result property="epgId" column="epgId"/>
+        <result property="epgVersion" column="epgVersion"/>
+        <result property="logicChannelId" column="logicChannelId"/>
+        <result property="programCode" column="programCode"/>
+        <result property="programName" column="programName"/>
+        <result property="programType" column="programType"/>
+        <result property="startDate" column="startDate"/>
+        <result property="startTime" column="startTime"/>
+        <result property="programLen" column="programLen"/>
+        <result property="channelId" column="channelId"/>
+        <result property="signalCode" column="signalCode"/>
+        <result property="programSource" column="programSource"/>
+        <result property="vaild" column="vaild"/>
+        <result property="auditStatus" column="auditStatus"/>
+        <result property="isVersionBak" column="isVersionBak"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+
+    <sql id="selectSignalEpgInfoVO">
+        select epgId, epgVersion, logicChannelId, programCode, programName, programType, startDate, startTime, programLen, channelId, signalCode, programSource, vaild, auditStatus, isVersionBak, createUserId, createTime, updateUserId, updateTime from signal_epg_info
+    </sql>
+
+</mapper>

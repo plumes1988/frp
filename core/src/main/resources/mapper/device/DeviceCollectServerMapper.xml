@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceCollectServerMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceCollectServer">
+                    <id column="serverId" property="serverId" />
+                    <result column="serverCode" property="serverCode" />
+                    <result column="serverName" property="serverName" />
+                    <result column="deviceId" property="deviceId" />
+                    <result column="controlIP" property="controlIP" />
+                    <result column="dataIP" property="dataIP" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            serverId, serverCode, serverName, deviceId, controlIP, dataIP
+        </sql>
+
+</mapper>

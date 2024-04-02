@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.logic.LogicThresholdRuleChannelRelMapper">
+
+    <resultMap id="LogicThresholdRuleChannelRelResult" type="com.figure.core.model.logic.LogicThresholdRuleChannelRel">
+        <result property="id" column="id"/>
+        <result property="channelId" column="channelId"/>
+        <result property="modelId" column="modelId"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateUserId" column="updateUserId"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+
+    <sql id="selectLogicThresholdRuleChannelRelVO">
+        select id,
+               channelId,
+               modelId,
+               createUserId,
+               createTime,
+               updateUserId,
+               updateTime,
+               isDelete
+        from logic_threshold_rule_channel_rel
+    </sql>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.DutyScheduleTaskAttendanceMapper">
+
+    <resultMap id="DutyScheduleTaskAttendanceListVoResult" type="com.figure.op.duty.domain.vo.DutyScheduleTaskAttendanceListVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="DutyScheduleTaskAttendanceListVoResult">
+        SELECT
+            w.workerId,
+            u.userName AS workerName,
+            w.scheduleTaskId,
+            t.scheduleDate,
+            COALESCE(a.dutyStatus, '0') AS dutyStatus,
+            CASE
+                WHEN a.dutyStatus = '1' THEN '请假'
+                WHEN a.dutyStatus = '2' THEN '旷工'
+                ELSE '正常'
+                END AS dutyStatusName,
+            COALESCE(a.leaveStartTime, a.absentStartTime, STR_TO_DATE(CONCAT(t.scheduleDate, ' ', s.startTime),'%Y-%m-%d %H:%i:%s')) AS startTime,
+            COALESCE(a.leaveEndTime, a.absentEndTime, STR_TO_DATE(CONCAT(t.scheduleDate, ' ', s.EndTime),'%Y-%m-%d %H:%i:%s')) AS EndTime
+        FROM
+            duty_schedule_task_worker w
+                LEFT JOIN duty_schedule_info s ON w.scheduleId = s.scheduleId
+                LEFT JOIN duty_schedule_task t ON w.scheduleTaskId = t.scheduleTaskId
+                LEFT JOIN duty_schedule_task_attendance a ON w.scheduleTaskId = a.scheduleTaskId AND w.workerId = a.workerId AND a.isDelete = 0
+                LEFT JOIN sys_user_info u ON w.workerId = u.userId
+        <where>
+            <if test="queryBo.scheduleId != null">
+                and w.scheduleId = #{queryBo.scheduleId}
+            </if>
+            <if test="queryBo.scheduleTaskId != null">
+                and w.scheduleTaskId = #{queryBo.scheduleTaskId}
+            </if>
+            <if test="queryBo.scheduleIds != null and queryBo.scheduleIds != ''">
+                and w.scheduleId in
+                <foreach collection="queryBo.scheduleIds.split(',')" item="scheduleId" open="(" separator="," close=")">
+                    #{scheduleId}
+                </foreach>
+            </if>
+            <if test="queryBo.scheduleTaskIds != null and queryBo.scheduleTaskIds != ''">
+                and w.scheduleTaskId in
+                <foreach collection="queryBo.scheduleTaskIds.split(',')" item="scheduleTaskId" open="(" separator="," close=")">
+                    #{scheduleTaskId}
+                </foreach>
+            </if>
+        and w.isDelete = 0
+        </where>
+        ORDER BY scheduleDate asc, workerId asc
+    </select>
+
+    <select id="selectVoList" resultMap="DutyScheduleTaskAttendanceListVoResult">
+        SELECT
+        w.workerId,
+        u.userName AS workerName,
+        w.scheduleTaskId,
+        t.scheduleDate,
+        COALESCE(a.dutyStatus, '0') AS dutyStatus,
+        CASE
+        WHEN a.dutyStatus = '1' THEN '请假'
+        WHEN a.dutyStatus = '2' THEN '旷工'
+        ELSE '正常'
+        END AS dutyStatusName,
+        COALESCE(a.leaveStartTime, a.absentStartTime, STR_TO_DATE(CONCAT(t.scheduleDate, ' ', s.startTime),'%Y-%m-%d %H:%i:%s')) AS startTime,
+        COALESCE(a.leaveEndTime, a.absentEndTime, STR_TO_DATE(CONCAT(t.scheduleDate, ' ', s.EndTime),'%Y-%m-%d %H:%i:%s')) AS EndTime
+        FROM
+        duty_schedule_task_worker w
+        LEFT JOIN duty_schedule_info s ON w.scheduleId = s.scheduleId
+        LEFT JOIN duty_schedule_task t ON w.scheduleTaskId = t.scheduleTaskId
+        LEFT JOIN duty_schedule_task_attendance a ON w.scheduleTaskId = a.scheduleTaskId AND w.workerId = a.workerId AND a.isDelete = 0
+        LEFT JOIN sys_user_info u ON w.workerId = u.userId
+        <where>
+            <if test="queryBo.scheduleId != null">
+                and w.scheduleId = #{queryBo.scheduleId}
+            </if>
+            <if test="queryBo.scheduleTaskId != null">
+                and w.scheduleTaskId = #{queryBo.scheduleTaskId}
+            </if>
+            <if test="queryBo.scheduleIds != null and queryBo.scheduleIds != ''">
+                and w.scheduleId in
+                <foreach collection="queryBo.scheduleIds.split(',')" item="scheduleId" open="(" separator="," close=")">
+                    #{scheduleId}
+                </foreach>
+            </if>
+            <if test="queryBo.scheduleTaskIds != null and queryBo.scheduleTaskIds != ''">
+                and w.scheduleTaskId in
+                <foreach collection="queryBo.scheduleTaskIds.split(',')" item="scheduleTaskId" open="(" separator="," close=")">
+                    #{scheduleTaskId}
+                </foreach>
+            </if>
+            and w.isDelete = 0
+        </where>
+        ORDER BY scheduleDate asc, workerId asc
+    </select>
+
+</mapper>

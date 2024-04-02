@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.visual.VisualBigscreenMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.visual.VisualBigscreen">
+                    <id column="bigScreenId" property="bigScreenId" />
+                    <result column="name" property="name" />
+                    <result column="poster" property="poster" />
+                    <result column="mark" property="mark" />
+                    <result column="config" property="config" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            bigScreenId, name, poster, mark, config
+        </sql>
+
+</mapper>

@@ -1,0 +1,157 @@
+server:
+  port: 9090
+  servlet:
+    contextPath: /api
+
+# DataSource Config
+
+spring:
+  application:
+    name: api-system-service
+  servlet:
+    multipart:
+      max-file-size: 900MB
+      max-request-size: 900MB
+  redis:
+    database: 0
+    password:
+    port: 6379
+    host: 127.0.0.1
+  #restapi专用数据源
+  datasource01:
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://192.168.119.148:3306/frp?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
+    username: figure
+    password: Figure@321
+    # 连接池配置
+    # 设置是否自动提交事务，默认为true
+    auto-commit: true
+    # 设置用于测试连接的SQL查询语句
+    connection-test-query: SELECT 1
+    # 设置获取数据库连接的超时时间，默认为30秒，单位是毫秒
+    connection-timeout: 30000
+    # 设置连接在连接池中保持空闲的最长时间，默认为10分钟，单位是毫秒
+    idle-timeout: 30000
+    # 设置连接在连接池中允许存在的最长时间，默认为30分钟，单位是毫秒
+    max-lifetime: 1800000
+    # 设置连接池中允许的最大连接数，默认为10
+    maximum-pool-size: 100
+    # 设置连接池中保持的最小空闲连接数，默认为10
+    minimum-idle: 30
+    # 设置连接池的名称，默认为"HikariPool-1"
+    pool-name: HikariPool_01
+    # 设置连接验证的超时时间，默认为5秒，单位是毫秒
+    validation-timeout: 5000
+  # 高频实时入库专用数据源
+  datasource02:
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://192.168.119.148:3306/frp?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
+    username: figure
+    password: Figure@321
+    # 连接池配置
+    # 设置是否自动提交事务，默认为true
+    auto-commit: true
+    # 设置用于测试连接的SQL查询语句
+    connection-test-query: SELECT 1
+    # 设置获取数据库连接的超时时间，默认为30秒，单位是毫秒
+    connection-timeout: 30000
+    # 设置连接在连接池中保持空闲的最长时间，默认为10分钟，单位是毫秒
+    idle-timeout: 30000
+    # 设置连接在连接池中允许存在的最长时间，默认为30分钟，单位是毫秒
+    max-lifetime: 1800000
+    # 设置连接池中允许的最大连接数，默认为10
+    maximum-pool-size: 100
+    # 设置连接池中保持的最小空闲连接数，默认为10
+    minimum-idle: 30
+    # 设置连接池的名称，默认为"HikariPool-1"
+    pool-name: HikariPool_02
+    # 设置连接验证的超时时间，默认为5秒，单位是毫秒
+    validation-timeout: 5000
+  # 时序数据库数据源
+  datasource03:
+    jdbc-url: jdbc:TAOS://192.168.100.101:6030/frp
+#    jdbc-url: jdbc:TAOS-RS://192.168.110.204:6041/frp
+    username: root
+    password: taosdata
+    # 连接池配置
+    # 设置是否自动提交事务，默认为true
+    auto-commit: true
+    # 设置用于测试连接的SQL查询语句
+    connection-test-query: SELECT SERVER_STATUS()
+    # 设置获取数据库连接的超时时间，默认为30秒，单位是毫秒
+    connection-timeout: 30000
+    # 设置连接在连接池中保持空闲的最长时间，默认为10分钟，单位是毫秒
+    idle-timeout: 30000
+    # 设置连接在连接池中允许存在的最长时间，默认为30分钟，单位是毫秒
+    max-lifetime: 1800000
+    # 设置连接池中允许的最大连接数，默认为10
+    maximum-pool-size: 100
+    # 设置连接池中保持的最小空闲连接数，默认为10
+    minimum-idle: 30
+    # 设置连接池的名称，默认为"HikariPool-1"
+    pool-name: HikariPool_03
+    # 设置连接验证的超时时间，默认为5秒，单位是毫秒
+    validation-timeout: 5000
+
+
+
+rocketmq:
+  # 多个NameServer，host:port;host:port，RocketMQProperties
+
+  name-server: 192.168.119.148:9876;192.168.119.148:9877
+#  name-server: 127.0.0.1:9876
+  producer:
+    # 发送同一类消息的设置为同一个group，保证唯一
+    group: springboot_producer_group
+    # 发送消息失败重试次数，默认2
+    retryTimesWhenSendFailed: 2
+    # 异步消息重试此处，默认2
+    retryTimesWhenSendAsyncFailed: 2
+    # 发送消息超时时间，默认3000
+    sendMessageTimeout: 3000
+    # 消息最大长度，默认1024 * 1024 * 4(默认4M)
+    maxMessageSize: 4000096
+    # 压缩消息阈值，默认4k(1024 * 4)
+    compressMessageBodyThreshold: 4096
+    # 是否在内部发送失败时重试另一个broker，默认false
+    retryNextServer: false
+    # access-key
+    #accessKey: xxx
+    # secret-key
+    #secretKey: xxx
+    # 是否启用消息跟踪，默认false
+    enableMsgTrace: false
+    # 消息跟踪主题的名称值。如果不进行配置，可以使用默认的跟踪主题名称
+    customizedTraceTopic: RMQ_SYS_TRACE_TOPIC
+  consumer:
+    # 配置指定group是否启动监听器 group1.topic1 = false
+    listeners:
+      # key：group名称
+      rocketmq_source_code_group:
+        # value：{key: topic名称: value: true/false}
+        rocketmq_source_code: true
+    # 指定消费组
+    group: springboot_consumer_group
+    # 指定topic，启动时就会注册
+    #topic: springboot_consumer_xxx
+    # 一次拉取消息最大值，注意是拉取消息的最大值而非消费最大值
+    pull-batch-size: 10
+    # 其他配置参考属性类
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    map-underscore-to-camel-case: false
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+
+logging:
+  level:
+    io.netty: ERROR
+    # 关闭RocketmqClient info日志，不然每隔几秒就会打印broker信息
+    RocketmqClient: error
+
+mysql:
+  binlog: 0 # 0:关闭；1:开启
+
+leveldb:
+  path: D:\dev\db

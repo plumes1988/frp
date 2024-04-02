@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.op.duty.mapper.RepairPlanInfoMapper">
+
+    <resultMap id="RepairPlanInfoPageVoResult" type="com.figure.op.duty.domain.vo.RepairPlanInfoPageVo">
+    </resultMap>
+
+    <select id="selectVoPage" resultMap="RepairPlanInfoPageVoResult">
+        select *
+        from repair_plan_info d
+        <where>
+            d.isDelete = 0
+        </where>
+        order by d.repairPlanId desc
+    </select>
+</mapper>

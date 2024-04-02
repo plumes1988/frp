@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.figure.core.repository.device.DeviceInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.figure.core.model.device.DeviceInfo">
+            <id column="deviceId" property="deviceId" />
+            <result column="deviceName" property="deviceName" />
+            <result column="deviceCode" property="deviceCode" />
+            <result column="deviceType" property="deviceType" />
+            <result column="deviceSubType" property="deviceSubType" />
+            <result column="imgURL" property="imgURL" />
+            <result column="signalType" property="signalType" />
+            <result column="interfaceCount" property="interfaceCount" />
+            <result column="monitorStationId" property="monitorStationId" />
+            <result column="logicPositionId" property="logicPositionId" />
+            <result column="locateId" property="locateId" />
+            <result column="cab" property="cab" />
+            <result column="uOfCab" property="uOfCab" />
+            <result column="slot" property="slot" />
+            <result column="parentDeviceId" property="parentDeviceId" />
+            <result column="assetNo" property="assetNo" />
+            <result column="controlIP" property="controlIP" />
+            <result column="dataIPs" property="dataIPs" />
+            <result column="remark" property="remark" />
+            <result column="syncStatus" property="syncStatus" />
+            <result column="createUserId" property="createUserId" />
+            <result column="createTime" property="createTime" />
+            <result column="updateUserId" property="updateUserId" />
+            <result column="updateTime" property="updateTime" />
+            <result column="isDelete" property="isDelete" />
+            <result column="communicationPara" property="communicationPara" />
+            <result column="underController" property="underController" />
+            <result column="netMagMode" property="netMagMode" />
+            <result column="deviceStructure" property="deviceStructure" />
+            <result column="uOfCost" property="uOfCost" />
+            <result column="collectServerCode" property="collectServerCode" />
+            <result column="enableAlarmMonitor" property="enableAlarmMonitor" />
+            <result column="script" property="script" />
+            <result column="alarmTemplateId" property="alarmTemplateId" />
+            <result column="communicationParaForAlarm" property="communicationParaForAlarm" />
+            <result column="slotOfCost" property="slotOfCost" />
+            <result column="slotOfNum" property="slotOfNum" />
+            <result column="uHeight" property="uHeight" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            deviceId, deviceName, deviceCode, deviceType, deviceSubType, imgURL, signalType, interfaceCount, monitorStationId, logicPositionId, locateId, cab, uOfCab, slot, parentDeviceId, assetNo, controlIP, dataIPs, remark, syncStatus, createUserId, createTime, updateUserId, updateTime, isDelete,  communicationPara, underController, netMagMode, deviceStructure, uOfCost, collectServerCode, enableAlarmMonitor, script, alarmTemplateId, communicationParaForAlarm,slotOfCost,slotOfNum,uHeight
+        </sql>
+
+    <select id="treelist" resultType="com.figure.core.model.device.DeviceInfoList">
+        select t.deviceId,
+        t.deviceName,
+        t.deviceCode,
+        t.deviceType,
+        t.deviceSubType,
+        t.modelId,
+        t.imgURL,
+        t.signalType,
+        t.interfaceCount,
+        t.monitorStationId,
+        t.logicPositionId,
+        t.locateId,
+        t.cab,
+        t.uOfCab,
+        t.slot,
+        t.parentDeviceId,
+        t.assetNo,
+        t.controlIP,
+        t.dataIPs,
+        t.remark,
+        t.syncStatus,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        t.communicationPara,
+        t.underController,
+        t.netMagMode,
+        sdd.paraName as linkTypeName,
+        flp.linkType as linkType,
+        flp.positionName as positionName,
+        dy1.typeName as deviceTypeName,
+        dy2.typeName as deviceSubTypeName
+        from device_info t
+        left join front_logic_position flp on flp.positionId = t.logicPositionId
+        left join sys_data_dictionary sdd on sdd.paraType = 'linkLevel' and sdd.paraValue = flp.linkType
+        left join device_type dy1 on dy1.typeCode = t.deviceType and dy1.leve = 1
+        left join device_type dy2 on dy2.parentTypeCode = t.deviceType and dy2.typeCode = t.deviceSubType and dy2.leve =
+        2
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+    <select id="interbydevice" resultType="com.figure.core.model.device.DeviceInfoList">
+        select t.deviceId,
+        t.deviceName,
+        t.deviceCode,
+        t.deviceType,
+        t.deviceSubType,
+        t.modelId,
+        lmii.interfaceName,
+        lmii.interfaceId
+        from device_info t
+        left join logic_monitorunit_info lmi on lmi.switchCode = t.deviceCode
+        left join logic_monitorunit_interface_rel lmir on lmi.unitId = lmir.unitId
+        left join logic_monitorunit_interface_info lmii on lmii.interfaceId = lmir.interfaceId
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+    <select id="detailList" resultType="java.util.HashMap">
+        SELECT
+        t.deviceId,
+        t.deviceName,
+        t.deviceCode,
+        t.deviceType,
+        t.deviceSubType,
+        t.modelId,
+        t.imgURL,
+        t.signalType,
+        t.interfaceCount,
+        t.monitorStationId,
+        t.logicPositionId,
+        t.locateId,
+        t.cab,
+        t.uOfCab,
+        t.slot,
+        t.parentDeviceId,
+        t.assetNo,
+        t.controlIP,
+        t.dataIPs,
+        t.remark,
+        t.syncStatus,
+        t.createUserId,
+        t.createTime,
+        t.updateUserId,
+        t.updateTime,
+        t.isDelete,
+        fsi.frontName,
+        flp.positionName,
+        dt1.typeName AS deviceTypeName,
+        dt2.typeName AS deviceSubTypeName
+        FROM
+        device_info t
+        LEFT JOIN front_station_info fsi ON fsi.frontId = t.monitorStationId
+        LEFT JOIN front_logic_position flp ON flp.positionId = t.logicPositionId
+        LEFT JOIN device_type dt1 ON dt1.typeCode = t.deviceType
+        LEFT JOIN device_type dt2 ON dt2.typeCode = t.deviceSubType
+        <if test="ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>
